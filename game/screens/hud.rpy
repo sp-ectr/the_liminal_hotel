@@ -1,0 +1,30 @@
+# ВНУТРИИГРОВОЙ HUD
+screen quick_menu():
+    zorder 100
+    if quick_menu:
+        hbox:
+            style_prefix "quick"
+            style "quick_menu"
+
+            textbutton _("История") action ShowMenu('history')
+            textbutton _("Пропуск") action Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Авто") action Preference("auto-forward", "toggle")
+            textbutton _("Опции") action ShowMenu('preferences')
+
+init python:
+    config.overlay_screens.append("quick_menu")
+
+default quick_menu = True
+style quick_menu is hbox
+style quick_button is default
+style quick_button_text is button_text
+
+style quick_menu:
+    xalign 0.5
+    yalign 1.0
+
+style quick_button:
+    properties gui.button_properties("quick_button")
+
+style quick_button_text:
+    properties gui.text_properties("quick_button")
