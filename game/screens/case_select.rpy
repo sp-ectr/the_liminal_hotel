@@ -1,4 +1,20 @@
-# ЭКРАН ВЫБОРА 3 ДЕЛ
+init python:
+    import time
+    #Action для загрузки дела
+    class LoadCase(Action):
+        def __init__(self, profile_id, slot_name):
+            self.profile_id = profile_id
+            self.slot_name = slot_name
+
+        def __call__(self):
+            TimeEngine.set_profile(self.profile_id)
+            renpy.load(self.slot_name)
+
+        def get_sensitive(self):
+            return self.slot_name is not None and renpy.can_load(self.slot_name)
+
+
+#ЭКРАН ВЫБОРА 3 ДЕЛ
 screen case_select():
     tag menu
     add "images/bg/menu.png"
@@ -40,7 +56,9 @@ screen case_select():
         text_hover_color "#ffffff"
         action Return()
 
-# КАРТОЧКА ДЕЛА
+
+
+#КАРТОЧКА ДЕЛА
 screen case_card(p_id):
     $ has_save = TimeEngine.has_save(p_id)
     $ latest_slot = TimeEngine.get_latest_save(p_id)
@@ -79,9 +97,16 @@ screen case_card(p_id):
                 background "#00000088"
 
                 if has_save and latest_slot:
-                    add FileScreenshot(latest_slot, page=""):
-                        xalign 0.5
-                        yalign 0.5
+                    $ thumb_img = renpy.slot_screenshot(latest_slot)
+                    if thumb_img:
+                        add thumb_img:
+                            xalign 0.5
+                            yalign 0.5
+                    else:
+                        text _("НЕТ СКРИНШОТА"):
+                            align (0.5, 0.5)
+                            color "#444444"
+                            size 20
                 else:
                     text _("АРХИВ ПУСТ"):
                         align (0.5, 0.5)
@@ -90,10 +115,15 @@ screen case_card(p_id):
 
             # Кнопки управления
             if has_save and latest_slot:
-                text FileTime(latest_slot, page="", format=_("{#file_time}%d.%m.%Y • %H:%M")):
-                    size 18
-                    color "#888888"
-                    xalign 0.5
+                $ mtime = renpy.slot_mtime(latest_slot)
+                if mtime:
+                    $ time_str = time.strftime("%d.%m.%Y • %H:%M", time.localtime(mtime))
+                    text "[time_str]":
+                        size 18
+                        color "#888888"
+                        xalign 0.5
+                else:
+                    null height 22
 
                 null height 5
 
@@ -103,10 +133,7 @@ screen case_card(p_id):
                     ysize 45
                     background "#c29b38"
                     hover_background "#dfb448"
-                    action [
-                        Function(TimeEngine.set_profile, p_id),
-                        Function(renpy.load, latest_slot)
-                    ]
+                    action LoadCase(p_id, latest_slot)
 
                     text _("ПРОДОЛЖИТЬ"):
                         align (0.5, 0.5)

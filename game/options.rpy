@@ -38,9 +38,12 @@ define config.has_autosave = False
 
 #Язык по умолчанию
 define config.default_language = "english"
+define _game_menu_screen = "preferences"
 
 #Настройка сборки
 init python:
+    if 'mouseup_3' in config.keymap['game_menu']:
+        config.keymap['game_menu'].remove('mouseup_3')
     #Игнорируем системный мусор и исходники в билде
     build.classify('**~', None)
     build.classify('**.bak', None)
