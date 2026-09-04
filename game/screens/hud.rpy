@@ -6,10 +6,14 @@ screen quick_menu():
             style_prefix "quick"
             style "quick_menu"
 
+            textbutton _("Доска улик (Tab)") action ShowMenu("investigation_board")
             textbutton _("История") action ShowMenu('history')
             textbutton _("Пропуск") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Авто") action Preference("auto-forward", "toggle")
             textbutton _("Опции") action ShowMenu('preferences')
+
+            #Tab для быстрого вызова Доски
+            key "K_TAB" action ShowMenu("investigation_board")
 
 init python:
     config.overlay_screens.append("quick_menu")

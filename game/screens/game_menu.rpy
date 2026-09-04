@@ -278,20 +278,32 @@ style history_label_text:
 
 screen about():
     tag menu
-    use game_menu(_("Об игре"), scroll="viewport"):
-        style_prefix "about"
-        vbox:
-            label "[config.name!t]"
-            text _("Версия [config.version!t]\n")
-            if gui.about:
-                text "[gui.about!t]\n"
-            text _("Сделано с помощью {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
 
-style about_label is gui_label
-style about_label_text is gui_label_text
-style about_text is gui_text
-style about_label_text:
-    size gui.label_text_size
+    add "images/bg/menu.png"
+    add "#000000C8"
+
+    vbox:
+        xalign 0.5
+        yalign 0.10
+        spacing 8
+
+        text _("О ПРОЕКТЕ"):
+            font "fonts/AlumniSansPinstripe.ttf"
+            size 65
+            color "#c29b38"
+            xalign 0.5
+            outlines [(2, "#000000", 0, 0)]
+
+    textbutton _("НАЗАД В МЕНЮ (Esc)"):
+        xalign 0.5
+        yalign 0.93
+        text_font "fonts/AlumniSansPinstripe.ttf"
+        text_size 42
+        text_color "#aaaaaa"
+        text_hover_color "#ffffff"
+        action Return()
+
+    key "game_menu" action Return()
 
 
 screen confirm(message, yes_action, no_action):

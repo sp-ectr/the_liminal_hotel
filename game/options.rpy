@@ -1,7 +1,7 @@
 ﻿# База
 define config.name = _("The Liminal Hotel")
 define gui.show_name = True
-define config.version = "0.1.0-demo"
+define config.version = "0.1.2-demo-base-prototype"
 define config.save_directory = "TheLiminalHotel-Demo-2026"
 define build.name = "The_Liminal_Hotel"
 
@@ -38,9 +38,12 @@ define config.has_autosave = False
 
 #Язык по умолчанию
 define config.default_language = "english"
+define _game_menu_screen = "preferences"
 
 #Настройка сборки
 init python:
+    if 'mouseup_3' in config.keymap['game_menu']:
+        config.keymap['game_menu'].remove('mouseup_3')
     #Игнорируем системный мусор и исходники в билде
     build.classify('**~', None)
     build.classify('**.bak', None)

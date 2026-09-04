@@ -1,4 +1,8 @@
 init -2 python:
+    import os
+    import re
+    import zipfile
+
     class TimeEngine:
         """
         Ядро автоматического таймлайна с поддержкой 3 независимых профилей
@@ -66,8 +70,23 @@ init -2 python:
         @classmethod
         def auto_step_save(cls):
             """Автосейв в A/B слот активного дела"""
-            if getattr(renpy.store, "main_menu", True) or cls._is_saving:
+            # 1. Защита от рекурсии
+            if cls._is_saving:
                 return
+
+            # 2. Не сохраняем в главном меню
+            if getattr(renpy.store, "main_menu", True):
+                return
+
+            # 3. СОХРАНЯЕМ ТОЛЬКО ВНУТРИ ИГРЫ и СЮЖЕТА
+            current_mode = renpy.get_mode()
+            if current_mode not in ("say", "menu", "pause"):
+                return
+
+            # 4. Если открыт системный экран — выходим
+            for blocked_screen in ("main_menu", "case_select", "preferences", "about", "game_menu", "history"):
+                if renpy.get_screen(blocked_screen):
+                    return
 
             p = cls.get_profile()
 
@@ -76,13 +95,11 @@ init -2 python:
                 slot_a = f"prof{p}_a"
                 slot_b = f"prof{p}_b"
 
-                latest = renpy.newest_slot(
-                    regexp=rf"^prof{p}_[ab]$"
-                )
+                latest = cls.get_latest_save(p)
 
                 target_slot = slot_b if latest == slot_a else slot_a
 
-                # Захватываем актуальный кадр для карточки дела
+                #Захватываем актуальный кадр игры
                 renpy.take_screenshot()
                 renpy.save(
                     target_slot,
@@ -97,14 +114,96 @@ init -2 python:
                 cls._is_saving = False
 
         @classmethod
+        def find_slot_path(cls, slot_name):
+            """Находит физический файл указанного слота"""
+            save_dir = renpy.config.savedir
+
+            if not os.path.isdir(save_dir):
+                return None
+
+            # Строгий шаблон: имя слота + любой суффикс после дефиса (-LT1, -auto, -1725...) + .save
+            pattern = re.compile(
+                rf"^{re.escape(slot_name)}(?:-.*)?\.save$"
+            )
+
+            try:
+                for fname in os.listdir(save_dir):
+                    if pattern.match(fname):
+                        return os.path.join(save_dir, fname)
+
+            except Exception as exc:
+                renpy.log(
+                    f"[TimeEngine ERROR] Ошибка поиска файла слота {slot_name}: {exc}"
+                )
+
+            return None
+
+        @classmethod
+        def is_slot_valid(cls, slot_name):
+            """Проверяет физическую целостность файла сохранения"""
+            save_path = cls.find_slot_path(slot_name)
+
+            if save_path is None:
+                return False
+
+            try:
+                if not os.path.isfile(save_path):
+                    return False
+
+                if os.path.getsize(save_path) <= 0:
+                    return False
+
+                with zipfile.ZipFile(save_path, "r") as save_file:
+                    if save_file.testzip() is not None:
+                        return False
+
+                    file_names = save_file.namelist()
+
+                    if not file_names:
+                        return False
+
+                    return True
+
+            except Exception as exc:
+                renpy.log(
+                    f"[TimeEngine ERROR] Повреждённый слот {slot_name}: {exc}"
+                )
+                return False
+
+        @classmethod
         def get_latest_save(cls, profile_id):
             """Возвращает самый свежий рабочий сейв для указанного дела"""
             if profile_id not in (1, 2, 3):
                 return None
 
-            return renpy.newest_slot(
-                regexp=rf"^prof{profile_id}_[ab]$"
+            slots = [
+                f"prof{profile_id}_a",
+                f"prof{profile_id}_b"
+            ]
+
+            valid_slots = []
+
+            for slot_name in slots:
+                if cls.is_slot_valid(slot_name):
+                    save_path = cls.find_slot_path(slot_name)
+
+                    if save_path is not None:
+                        valid_slots.append(
+                            (
+                                os.path.getmtime(save_path),
+                                slot_name
+                            )
+                        )
+
+            if not valid_slots:
+                return None
+
+            valid_slots.sort(
+                key=lambda item: item[0],
+                reverse=True
             )
+
+            return valid_slots[0][1]
 
         @classmethod
         def has_save(cls, profile_id):
@@ -129,7 +228,7 @@ init -2 python:
             p = cls.get_profile()
             slot_name = f"prof{p}_anchor_{anchor_id}"
 
-            if not renpy.can_load(slot_name):
+            if not cls.is_slot_valid(slot_name):
                 renpy.notify(
                     _("Временной якорь повреждён или недоступен!")
                 )
