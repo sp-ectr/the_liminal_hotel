@@ -12,7 +12,7 @@ transform menu_buttons_intro:
 #ЭКРАН ГЛАВНОГО МЕНЮ
 screen main_menu():
     tag menu
-    add "images/bg/menu.png"
+    add "bg menu"
 
     add "images/gui/logo.png":
         xalign 0.5
