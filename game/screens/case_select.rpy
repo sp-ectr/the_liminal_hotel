@@ -11,7 +11,7 @@ init python:
             renpy.load(self.slot_name)
 
         def get_sensitive(self):
-            return self.slot_name is not None and renpy.can_load(self.slot_name)
+            return self.slot_name is not None and TimeEngine.is_slot_valid(self.slot_name)
 
 
 #ЭКРАН ВЫБОРА 3 ДЕЛ

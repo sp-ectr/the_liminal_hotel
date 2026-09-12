@@ -1,8 +1,11 @@
-﻿################################################################################
+################################################################################
 ## Инициализация и Базовые Стили
 ################################################################################
 
 init offset = -1
+
+default use_black_textbox = False
+default hide_namebox = False
 
 style default:
     properties gui.text_properties()
@@ -75,7 +78,7 @@ screen say(who, what):
     window:
         id "window"
 
-        if who is not None:
+        if who is not None and not hide_namebox:
             window:
                 id "namebox"
                 style "namebox"
@@ -97,7 +100,7 @@ style window:
     xsize 1480
     ysize 260
     padding (0, 0, 0, 0)
-    background Image("images/gui/text_box.png", xalign=0.5, yalign=1.0)
+    background ConditionSwitch("use_black_textbox", Image("images/gui/text_box_black.png", xalign=0.5, yalign=1.0), "True", Image("images/gui/text_box.png", xalign=0.5, yalign=1.0))
 
 style say_label is default
 style say_dialogue is default
@@ -107,10 +110,10 @@ style namebox_label is say_label
 
 # Плашка имени: ровно на верхней закладке блокнота
 style namebox:
-    xpos 230
-    ypos 14
+    xpos 95
+    ypos -42
     xanchor 0.0
-    yanchor 0.0
+    yanchor 1.0
     background None
     padding (0, 0, 0, 0)
 
@@ -118,7 +121,7 @@ style namebox:
 style say_label:
     properties gui.text_properties("name", accent=True)
     size 22
-    color "#8b1111"
+    color "#1a1a1a"
     bold True
 
 # Текст диалога: строго под закладкой с ограничением по ширине

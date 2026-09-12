@@ -91,19 +91,25 @@ transform sprite_appear:
 transform sprite_disappear:
     easeout 0.25 alpha 0.0 yoffset 15
 
+# Стандартная позиция Доктора
+transform doctor_normal:
+    zoom 0.5
+    xalign 0.5
+    yalign 1.0
+
 # Крупный план Доктора
 transform close_up_doctor:
-    zoom 1.5
+    zoom 0.75
     xalign 0.5
     yalign 0.15
 
 # Крупный план Доктора с затемнением
 transform close_up_darkened:
-    zoom 1.5
+    zoom 0.75
     xalign 0.5
     yalign 0.15
     matrixcolor TintMatrix("#333333")
 
 # Возврат Доктора к обычному состоянию
 transform restore_doctor_normal:
-    easein 0.8 zoom 1.0 xalign 0.5 yalign 1.0 matrixcolor TintMatrix("#ffffff")
+    easein 0.8 zoom 0.5 xalign 0.5 yalign 1.0 matrixcolor TintMatrix("#ffffff")

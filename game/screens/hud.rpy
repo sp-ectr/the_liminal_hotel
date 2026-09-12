@@ -24,11 +24,17 @@ style quick_button is default
 style quick_button_text is button_text
 
 style quick_menu:
-    xalign 0.5
-    yalign 1.0
+    xpos 1660
+    ypos 1044
+    xanchor 1.0
+    yanchor 1.0
+    spacing 24
 
 style quick_button:
     properties gui.button_properties("quick_button")
 
 style quick_button_text:
     properties gui.text_properties("quick_button")
+    size 19
+    color "#e0dacf"
+    hover_color "#ffffff"

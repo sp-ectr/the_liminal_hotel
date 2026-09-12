@@ -1,6 +1,4 @@
-# -------------------------------------------------------------------
-# ВРЕМЕННЫЕ ПЛЕЙСХОЛДЕРЫ CG
-# -------------------------------------------------------------------
+#ВРЕМЕННЫЕ ПЛЕЙСХОЛДЕРЫ CG
 image cg dead_body_half = Composite(
     (1920, 1080),
     (0, 0), "#000000CC",
@@ -23,10 +21,11 @@ image cg dead_body_full = Composite(
 )
 
 
-# -------------------------------------------------------------------
-# СЦЕНА 1: ЭКСПОЗИЦИЯ
-# -------------------------------------------------------------------
+#СЦЕНА 1: ЭКСПОЗИЦИЯ
 label exposition:
+
+    $ use_black_textbox = False
+    $ hide_namebox = False
 
     # 1. ТЕМНЫЙ ЭКРАН
     stop music fadeout 1.0
@@ -34,15 +33,17 @@ label exposition:
     window hide
 
     scene black with dissolve
+    $ renpy.music.set_volume(1.0, delay=0.0, channel="ambient")
+    $ renpy.music.set_volume(1.0, delay=0.0, channel="ambient_layer")
     play ambient audio.amb_writing fadein 1.5
     play sound audio.sfx_writing
 
-    # 2. КИНЕМАТОГРАФИЧНЫЙ ТИТР ПО ЦЕНТРУ
+    #2 КИНЕМАТОГРАФИЧНЫЙ ТИТР ПО ЦЕНТРУ
     show text "{color=#b51a1a}{size=90}{font=fonts/AlumniSansPinstripe.ttf}Самые громкие истории начинаются с убийства.{/font}{/size}{/color}" at truecenter with Dissolve(1.2)
     pause
     hide text with Dissolve(0.8)
 
-    # 3. ВСТУПИТЕЛЬНЫЙ МОНОЛОГ
+    #3. ВСТУПИТЕЛЬНЫЙ МОНОЛОГ
     $ quick_menu = True
     window show
     with dissolve
@@ -57,10 +58,12 @@ label exposition:
 
     n "И совсем недавно я и мои друзья лицезрели зверскую картину, которая не оставит вас равнодушными."
 
-    # 4. ПЕРЕХОД К СЦЕНЕ УБИЙСТВА
+    #4. ПЕРЕХОД К СЦЕНЕ УБИЙСТВА
     $ renpy.music.set_volume(0.15, delay=1.0, channel="ambient")
-    play ambient audio.amb_dead_body fadein 1.5
+    play ambient_layer audio.amb_dead_body fadein 1.5
     play music audio.mus_dead_body fadein 2.0
+    #Чёрный textbox включается на блоке с телом и зловещей музыкой.
+    $ use_black_textbox = True
 
     scene cg dead_body_half
     with dissolve
@@ -71,7 +74,7 @@ label exposition:
 
     n "Вернее, его отсутствия."
 
-    # 5. КРУПНЫЙ ПЛАН ТРУПА
+    #5. КРУПНЫЙ ПЛАН ТРУПА
     scene cg dead_body_full with Dissolve(0.15)
     with hpunch
 
@@ -87,10 +90,13 @@ label exposition:
 
     n "Потому что каждый здесь мог стать следующим."
 
-    # 6. ВОЗВРАТ ИЗ СЦЕНЫ УБИЙСТВА
+    #6. ВОЗВРАТ ИЗ СЦЕНЫ УБИЙСТВА
     stop music fadeout 1.5
-    stop ambient fadeout 1.5
-    play ambient audio.amb_writing fadein 1.5
+    stop ambient_layer fadeout 1.5
+    $ renpy.music.set_volume(1.0, delay=1.5, channel="ambient")
+    #Возвращаем обычный блокнот для финального обращения к читателю.
+    $ use_black_textbox = False
+    $ hide_namebox = False
 
     scene black with dissolve
 
@@ -102,8 +108,9 @@ label exposition:
 
     n "В конце концов, вы здесь ради разгадок."
 
-    # 7. ФИНАЛ ЭКСПОЗИЦИИ
+    #7. ФИНАЛ ЭКСПОЗИЦИИ
     stop ambient fadeout 1.5
+    stop ambient_layer fadeout 1.5
     window hide
     $ quick_menu = False
 

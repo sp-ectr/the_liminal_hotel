@@ -32,15 +32,17 @@ screen main_menu():
         use main_menu_nav_button(_("Exit"), Quit(confirm=False))
 
 # КОМПОНЕНТ КНОПКИ ГЛАВНОГО МЕНЮ
-screen main_menu_nav_button(label_text, button_action, click_sound=audio.ui_click_1):
+screen main_menu_nav_button(label_text, button_action, click_sound=None):
     button:
         action button_action
         xanchor 0.5
         yanchor 0.5
 
-        # Чистые зарегистрированные ассеты из assets.rpy
-        hover_sound audio.ui_hover_1
-        activate_sound click_sound
+        # Рандомизация наведения (ui_hover_1 или ui_hover_2)
+        hover_sound renpy.random.choice([audio.ui_hover_1, audio.ui_hover_2])
+
+        # Если задан специальный звук (ui_start) — играет он, иначе рандомный клик (1 или 2)
+        activate_sound (click_sound if click_sound else renpy.random.choice([audio.ui_click_1, audio.ui_click_2]))
 
         hover_background Transform("images/gui/pickMenu.png", align=(0.5, 0.5))
 
