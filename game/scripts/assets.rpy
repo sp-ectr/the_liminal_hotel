@@ -15,7 +15,6 @@ define audio.amb_restaurant = "audio/amb/amb_restaurant.ogg"
 define audio.amb_writing = "audio/amb/amb_writing.ogg"
 
 
-
 # РЕГИСТРАЦИЯ АУДИО: МУЗЫКА
 define audio.mus_atrium = "audio/music/mus_atrium.ogg"
 define audio.mus_dead_body = "audio/music/mus_dead_body.ogg"
@@ -24,40 +23,29 @@ define audio.mus_hotel_room = "audio/music/mus_hotel_room.ogg"
 define audio.mus_main_menu = "audio/music/mus_main_menu.ogg"
 define audio.mus_restaurant = "audio/music/mus_restaurant.ogg"
 
-
-
-#РЕГИСТРАЦИЯ АУДИО: ЗВУКОВЫЕ ЭФФЕКТЫ
-define audio.sfx_car_crash = "audio/sfx/sfx_car_crash.wav"
-define audio.sfx_cloth = "audio/sfx/sfx_cloth.wav"
-define audio.sfx_deer = "audio/sfx/sfx_deer.wav"
-define audio.sfx_door_handle = "audio/sfx/sfx_door_handle.wav"
-define audio.sfx_elevator = "audio/sfx/sfx_elevator.wav"
-define audio.sfx_fast_pulse = "audio/sfx/sfx_fast_pulse.wav"
-define audio.sfx_slow_pulse = "audio/sfx/sfx_slow_pulse.wav"
-define audio.sfx_lamps = "audio/sfx/sfx_lamps.wav"
-define audio.sfx_pen_click = "audio/sfx/sfx_pen_click.wav"
-define audio.sfx_radio = "audio/sfx/sfx_radio.wav"
 define audio.sfx_radio_interference = "audio/sfx/sfx_radio_interference.ogg"
-define audio.sfx_writing = "audio/sfx/sfx_writing.wav"
 
-#Звуки отеля
-define audio.sfx_hotel_room_001 = "audio/sfx/sfx_hotel_room-001.wav"
-define audio.sfx_hotel_room_002 = "audio/sfx/sfx_hotel_room-002.wav"
-define audio.sfx_hotel_room_003 = "audio/sfx/sfx_hotel_room-003.wav"
-define audio.sfx_hotel_room_004 = "audio/sfx/sfx_hotel_room-004.wav"
-define audio.sfx_hotel_room_005 = "audio/sfx/sfx_hotel_room-005.wav"
-define audio.sfx_hotel_room_006 = "audio/sfx/sfx_hotel_room-006.wav"
-define audio.sfx_hotel_room_007 = "audio/sfx/sfx_hotel_room-007.wav"
-define audio.sfx_hotel_room_008 = "audio/sfx/sfx_hotel_room-008.wav"
-define audio.sfx_hotel_room_009 = "audio/sfx/sfx_hotel_room-009.wav"
+# Временные заглушки (движок не упадет при вызове, пока ждем .ogg)
+define audio.sfx_writing = "<silence 0.0>"
+define audio.sfx_radio = "<silence 0.0>"
+define audio.sfx_deer = "<silence 0.0>"
+define audio.sfx_car_crash = "<silence 0.0>"
+define audio.sfx_cloth = "<silence 0.0>"
+define audio.sfx_pen_click = "<silence 0.0>"
+define audio.sfx_fast_pulse = "<silence 0.0>"
+define audio.sfx_slow_pulse = "<silence 0.0>"
+define audio.sfx_lamps = "<silence 0.0>"
+define audio.sfx_elevator = "<silence 0.0>"
+define audio.sfx_monster_walk = "<silence 0.0>"
+define audio.sfx_monster_punch = "<silence 0.0>"
+define audio.sfx_chase = "<silence 0.0>"
+define audio.sfx_time_scratch = "<silence 0.0>"
+define audio.sfx_hotel_room_002 = "<silence 0.0>"
+define audio.sfx_hotel_room_004 = "<silence 0.0>"
+define audio.sfx_hotel_room_005 = "<silence 0.0>"
+define audio.sfx_hotel_room_007 = "<silence 0.0>"
 
 #Звуки интерфейса
-define audio.ui_click_1 = "audio/ui/ui_click_1.wav"
-define audio.ui_click_2 = "audio/ui/ui_click_2.wav"
-define audio.ui_hover_1 = "audio/ui/ui_hover_1.wav"
-define audio.ui_hover_2 = "audio/ui/ui_hover_2.wav"
-define audio.ui_start = "audio/ui/ui_start.wav"
-
 
 
 #РЕГИСТРАЦИЯ ФОНОВ (BACKGROUNDS)

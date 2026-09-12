@@ -12,6 +12,7 @@ transform menu_buttons_intro:
 #ЭКРАН ГЛАВНОГО МЕНЮ
 screen main_menu():
     tag menu
+
     add "bg menu"
 
     add "images/gui/logo.png":
@@ -25,18 +26,22 @@ screen main_menu():
         spacing 70
         at menu_buttons_intro
 
-        use main_menu_nav_button(_("Start"), ShowMenu("case_select"))
+        use main_menu_nav_button(_("Start"), ShowMenu("case_select"), click_sound=audio.ui_start)
         use main_menu_nav_button(_("Options"), ShowMenu("preferences"))
         use main_menu_nav_button(_("About"), ShowMenu("about"))
         use main_menu_nav_button(_("Exit"), Quit(confirm=False))
 
 # КОМПОНЕНТ КНОПКИ ГЛАВНОГО МЕНЮ
-screen main_menu_nav_button(label_text, button_action):
+screen main_menu_nav_button(label_text, button_action, click_sound=audio.ui_click_1):
     button:
         action button_action
         xanchor 0.5
         yanchor 0.5
-        focus_mask True
+
+        # Чистые зарегистрированные ассеты из assets.rpy
+        hover_sound audio.ui_hover_1
+        activate_sound click_sound
+
         hover_background Transform("images/gui/pickMenu.png", align=(0.5, 0.5))
 
         text label_text:

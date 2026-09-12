@@ -9,9 +9,10 @@ init python:
 #1 Главная героиня
 default player_first_name = ""
 default player_last_name = ""
+default player_display_name = _("Я")
 
 #Прямая речь ГГ: пока имя пустое - пишет "Я", после ввода - "Имя Фамилия"
-define me = Character(get_player_name)
+define me = Character("[player_display_name]")
 
 #Рассказчик / внутренний монолог
 define n = Character(None)

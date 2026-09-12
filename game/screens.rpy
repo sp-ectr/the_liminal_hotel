@@ -1,5 +1,7 @@
-﻿#Инициализация и Базовые Стили
-##############################
+﻿################################################################################
+## Инициализация и Базовые Стили
+################################################################################
+
 init offset = -1
 
 style default:
@@ -65,18 +67,20 @@ style frame:
     background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
 
-
-## Диалоговые Экраны
-#####################
+################################################################################
+## Диалоговые Экраны (Точная верстка под блокнот text_box.png)
+################################################################################
 
 screen say(who, what):
     window:
         id "window"
+
         if who is not None:
             window:
                 id "namebox"
                 style "namebox"
                 text who id "who"
+
         text what id "what"
 
     if not renpy.variant("small"):
@@ -85,47 +89,53 @@ screen say(who, what):
 init python:
     config.character_id_prefixes.append('namebox')
 
+
+# Окно блокнота
 style window:
     xalign 0.5
-    xfill True
-    yalign gui.textbox_yalign
-    ysize gui.textbox_height
+    yalign 0.98
+    xsize 1480
+    ysize 260
+    padding (0, 0, 0, 0)
     background Image("images/gui/text_box.png", xalign=0.5, yalign=1.0)
 
-    
 style say_label is default
 style say_dialogue is default
 style say_thought is say_dialogue
 style namebox is default
 style namebox_label is say_label
 
-style window:
-    xalign 0.5
-    xfill True
-    yalign gui.textbox_yalign
-    ysize gui.textbox_height
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
-
+# Плашка имени: ровно на верхней закладке блокнота
 style namebox:
-    xpos gui.name_xpos
-    xanchor gui.name_xalign
-    xsize gui.namebox_width
-    ypos gui.name_ypos
-    ysize gui.namebox_height
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
-    padding gui.namebox_borders.padding
+    xpos 230
+    ypos 14
+    xanchor 0.0
+    yanchor 0.0
+    background None
+    padding (0, 0, 0, 0)
 
+# Текст имени персонажа
 style say_label:
     properties gui.text_properties("name", accent=True)
-    xalign gui.name_xalign
-    yalign 0.5
+    size 22
+    color "#8b1111"
+    bold True
 
+# Текст диалога: строго под закладкой с ограничением по ширине
 style say_dialogue:
     properties gui.text_properties("dialogue")
-    xpos gui.dialogue_xpos
-    xsize gui.dialogue_width
-    ypos gui.dialogue_ypos
+    xpos 230
+    ypos 68
+    xsize 1180
+    size 24
+    color "#e0dacf"
+    line_spacing 4
     adjust_spacing False
+
+
+################################################################################
+## Экраны Выбора и Ввода
+################################################################################
 
 screen choice(items):
     style_prefix "choice"
