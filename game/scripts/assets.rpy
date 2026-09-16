@@ -42,8 +42,10 @@ define audio.sfx_slow_pulse = "audio/sfx/sfx_slow_pulse.ogg"
 define audio.sfx_lamps = "audio/sfx/sfx_lamps.ogg"
 define audio.sfx_pen_click = "audio/sfx/sfx_pen_click.ogg"
 define audio.sfx_radio_interference = "audio/sfx/sfx_radio_interference.ogg"
-define audio.sfx_radio = "audio/sfx/sfx_pen_click.ogg"
+define audio.sfx_radio = "audio/sfx/sfx_radio.ogg"
 define audio.sfx_writing = "audio/sfx/sfx_writing.ogg"
+define audio.sfx_before_screamer = "audio/sfx/sfx_before_screamer.ogg"
+define audio.sfx_radio_interference_no_voices = "audio/sfx/sfx_radio_interference_no_voices.ogg"
 
 #Звуки отеля (001 - 009)
 define audio.sfx_hotel_room_001 = "audio/sfx/sfx_hotel_room-001.ogg"

@@ -33,10 +33,9 @@ label exposition:
     window hide
 
     scene black with dissolve
-    $ renpy.music.set_volume(1.0, delay=0.0, channel="ambient")
-    $ renpy.music.set_volume(1.0, delay=0.0, channel="ambient_layer")
+    $ renpy.music.set_volume(0.5, delay=0.0, channel="ambient")
     play ambient audio.amb_writing fadein 1.5
-    play sound audio.sfx_writing
+
 
     #2 КИНЕМАТОГРАФИЧНЫЙ ТИТР ПО ЦЕНТРУ
     show text "{color=#b51a1a}{size=90}{font=fonts/AlumniSansPinstripe.ttf}Самые громкие истории начинаются с убийства.{/font}{/size}{/color}" at truecenter with Dissolve(1.2)
@@ -59,6 +58,7 @@ label exposition:
     n "И совсем недавно я и мои друзья лицезрели зверскую картину, которая не оставит вас равнодушными."
 
     #4. ПЕРЕХОД К СЦЕНЕ УБИЙСТВА
+    stop ambient  fadeout 1
     $ renpy.music.set_volume(0.15, delay=1.0, channel="ambient")
     play ambient_layer audio.amb_dead_body fadein 1.5
     play music audio.mus_dead_body fadein 2.0
@@ -93,7 +93,9 @@ label exposition:
     #6. ВОЗВРАТ ИЗ СЦЕНЫ УБИЙСТВА
     stop music fadeout 1.5
     stop ambient_layer fadeout 1.5
-    $ renpy.music.set_volume(1.0, delay=1.5, channel="ambient")
+    $ renpy.music.set_volume(0.5, delay=1.5, channel="ambient")
+    play ambient audio.amb_writing fadein 1.5
+
     #Возвращаем обычный блокнот для финального обращения к читателю.
     $ use_black_textbox = False
     $ hide_namebox = False

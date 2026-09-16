@@ -24,6 +24,7 @@ image cg deer_jumpscare = Composite(
     )
 )
 
+define af = renpy.audio.filter
 
 #СЦЕНА 2: ПРОЛОГ (ПОЕЗДКА В ЛЕСУ, РАДИО И АВАРИЯ)
 label prologue:
@@ -38,6 +39,7 @@ label prologue:
     with dissolve
 
     # Дождь + музыка по радио
+    $ renpy.music.set_volume(2.0, delay=1.5, channel="ambient")
     play ambient audio.amb_forest_night fadein 2.0
 
     scene bg forest_night
@@ -70,9 +72,9 @@ label prologue:
     n "Трек за треком, каждая радиостанция считает своим долгом пустить один и тот же топ 2004 года. Как назло, песни в нём либо не бьются с моим меланхоличным раздражением, либо делают его только гаже."
 
     # МГНОВЕННОЕ ВЫКЛЮЧЕНИЕ РАДИО: резкий стоп песни и запуск чистого глухого дождя
+    stop ambient fadeout 3.0
     play sound audio.sfx_radio
-    stop ambient
-    play ambient audio.amb_forest_night_silent fadein 0.3
+    play ambient_layer audio.amb_forest_night_silent
 
     n "На какое-то время наступает тишина. Сперва приятная, но спустя мгновение — давящая."
 
@@ -86,7 +88,7 @@ label prologue:
     # ---------------------------------------------------------------
     # Чёрный textbox включается вместе с первым мистическим сбоем радио.
     $ use_black_textbox = True
-    play sound audio.sfx_radio_interference
+
 
     n "Бросаю мимолётный взгляд обратно на магнитолу. Выключена."
 
@@ -96,7 +98,7 @@ label prologue:
 
     n "Льёт…"
 
-    play sound audio.sfx_radio_interference
+    play sound audio.sfx_radio_interference_no_voices volume 0.5 loop
 
     radio "Да, давненько мы не говори {i}*помехи*{/i} о жутких историях {i}*помехи*{/i} округа {i}*помехи*{/i}"
 
@@ -105,6 +107,8 @@ label prologue:
     n "Вновь тянусь рукой к магнитоле и усиленно давлю на кнопку выключения. Чернухи в жизни и работе мне хватает и без этого."
 
     play sound audio.sfx_radio
+    pause 0.6
+    play sound audio.sfx_radio_interference_no_voices volume 0.5 loop
 
     radio "Или ту исто– {i}*помехи*{/i} –егерь, которому поручили сокра– {i}*помехи*{/i} –цию оленей в лесу, освежевал своего сына, приняв его за звер– {i}*помехи*{/i}"
 
@@ -118,12 +122,13 @@ label prologue:
     # ---------------------------------------------------------------
     # 4. ПЕРВЫЙ СИЛУЭТ ОЛЕНЯ И ПОЛНАЯ ТИШИНА
     # ---------------------------------------------------------------
-    # Глушим вообще всё: наступает гробовая тишина
-    stop ambient
+    # Пред-скримерный звук
+    stop ambient_layer
     stop sound
     stop music
 
     scene bg forest_deer
+
 
     n "Противотуманка и дальники выхватывают тень."
 
@@ -132,6 +137,7 @@ label prologue:
 
     # Возвращаем тихий дождь
     play ambient audio.amb_forest_night_silent fadein 1.0
+    $renpy.music.set_audio_filter ("ambient", af.Lowpass(frequency=1000, q=1.0), replace=True)
 
     n "Выпрямляюсь. Всё внимание снова на дороге."
 
@@ -145,8 +151,11 @@ label prologue:
     # ---------------------------------------------------------------
     # 5. СКРИМЕР И СТОЛКНОВЕНИЕ
     # ---------------------------------------------------------------
-    stop ambient
+    $renpy.music.set_audio_filter ("sound", af.Lowpass(frequency=1200, q=1.0), replace=True)
+    $renpy.music.set_audio_filter ("ambient", af.Lowpass(frequency=400, q=1.0), replace=True)
+
     scene bg forest_deer
+    play sound audio.sfx_before_screamer
 
     n "!!!"
 
@@ -156,12 +165,16 @@ label prologue:
 
     n "Долговязая, определённо прямоходящая. И с длинными рогами, торчащими из животной головы."
 
+    stop sound fadeout 4.0
+
     n "То ли человек, то ли… олень?"
+
 
     # Резкий громкий скример без диалогового блокнота поверх CG
     $ quick_menu = False
     window hide
-
+    $ renpy.music.set_audio_filter("ambient", None, replace=True, duration=0.5)
+    $ renpy.music.set_audio_filter("sound", None, replace=True)
     play sound audio.sfx_deer volume 2.0
     show cg deer_jumpscare at camera_shake
     with Dissolve(0.05)
@@ -173,6 +186,8 @@ label prologue:
 
     n "Это всё, что я успеваю осознать за мгновение до того, как моя машина сталкивается с ближайшим деревом."
 
+    stop sound fadeout 6.0
+
     n "Дальше—"
 
 
@@ -180,6 +195,8 @@ label prologue:
     # 6. АВАРИЯ И ПЕРЕХОД В КОШМАР
     # ---------------------------------------------------------------
     stop sound
+    $ renpy.music.set_audio_filter("ambient", af.Lowpass(frequency=400, q=1.0), replace=True, duration = 2.0)
+    stop ambient fadeout 1.5
     scene black
     with hpunch
 
