@@ -70,8 +70,8 @@ label hotel_dream:
 
     scene bg scary_hall
     with Dissolve(1.5)
-
     play ambient audio.amb_chase fadein 2.0
+    $ renpy.music.set_volume(0.7, delay=1.5, channel="ambient")
 
     $ quick_menu = True
     window show
@@ -87,7 +87,7 @@ label hotel_dream:
 
     #Гудение ламп с задержкой в 1 секунду
     pause 1.0
-    play sound audio.sfx_lamps
+    play sound audio.sfx_lamps volume 0.3
 
     n "По длинному коридору не разносится даже эха шагов. Как будто всё это — люминесцентные лампы, ковролин и ряды дверей, — существует в вакууме."
 
@@ -106,7 +106,8 @@ label hotel_dream:
     n "Замечаю указатель, ведущий к лифту. Лестницу. И глухие стены, тянущиеся на метры вперёд."
 
     #Толчок пола
-    play sound audio.sfx_hotel_room_004
+    $renpy.music.set_audio_filter ("sound", af.Lowpass(frequency=1300, q=1.0), replace=True)
+    play sound audio.sfx_impact
 
     n "Пол вздрагивает."
 
@@ -116,20 +117,21 @@ label hotel_dream:
 
     n "Но тогда откуда жжение между лопаток, будто я теперь цель зверя, которого пока не могу увидеть?"
 
-    #Пульс
-    play sound audio.sfx_fast_pulse
-
     n "Торможу, чтобы за звуком пульсирующей в ушах крови услышать… что-то."
-
-    #Шаги монстра
-    play sound audio.sfx_monster_walk
+    $renpy.music.set_audio_filter ("sound", None, replace=True)
+    #Крик монстра
+    play sound audio.sfx_monster_scream_far
 
     n "И я правда слышу."
 
     n "И не хочу оборачиваться, потому что оно не похоже ни на что человеческое."
 
     #Музыка погони
-    play music audio.mus_chase fadein 1.0
+    stop ambient fadeout 2.0
+
+    play ambient_layer audio.sfx_chase loop volume 0.6 fadein 0.2
+    play music audio.mus_dead_body fadein 1.0
+
 
     n "Срываюсь на бег."
 
@@ -185,7 +187,7 @@ label dream_stairs_route:
 
     n "Это не шаги."
 
-    play sound audio.sfx_chase
+    play sound audio.sfx_monster_scream_close volume 0.8
 
     n "Судя по звуку, кто-то бросает вперёд разбухшую конечность, а потом подтаскивает к ней остальное грузное тело. Оно волочится по полу с влажным, хлюпающим звуком."
 
@@ -228,8 +230,10 @@ label dream_stairs_route:
     n "Я лечу вниз—"
 
     #ЭКРАН СМЕРТИ
-    stop music
-    stop ambient
+    stop music fadeout 1.0
+    stop ambient fadeout 1.0
+    stop sound fadeout 1.0
+    stop ambient_layer fadeout 1.0
     scene black
     with hpunch
 
@@ -239,13 +243,15 @@ label dream_stairs_route:
     show text "{color=#b51a1a}{size=55}{font=fonts/AlumniSansPinstripe.ttf}Вы погибли… или же нет?{/font}{/size}{/color}" at truecenter
     with Dissolve(0.8)
 
-    play sound audio.sfx_time_scratch
-    pause 1.2
+
 
     #ИНТЕРАКТИВНОЕ ВОСКРЕШЕНИЕ И ПЕРЕМОТКА
     menu:
         "> Воскрешение":
             pass
+
+    play sound audio.sfx_time_scratch
+    pause 1.2
 
     hide text
     with Dissolve(0.3)
@@ -258,6 +264,8 @@ label dream_stairs_route:
     scene bg scary_hall
     with dissolve
 
+    $renpy.music.set_volume(0.7, delay=1.5, channel="ambient")
+    play ambient audio.amb_chase
     play sound audio.sfx_hotel_room_005
 
     $ quick_menu = True
@@ -278,8 +286,6 @@ label dream_stairs_route:
 
     n "Не нахожу и следа повреждений."
 
-    play sound audio.sfx_fast_pulse
-
     n "Дыхание сбито, сердце колотится. Кажется, что погоня продолжается."
 
     me "Как же… как же так?"
@@ -294,8 +300,8 @@ label dream_stairs_route:
 
     n "Кажется, сейчас я и узнаю."
 
-    play sound audio.sfx_monster_walk
-    play music audio.mus_chase fadein 1.0
+    play sound audio.sfx_monster_scream_close volume 0.8
+    play music audio.mus_dead_body fadein 1.0
 
     n "Я слышу его приближение."
 
@@ -312,7 +318,7 @@ label dream_elevator_route:
 
     scene bg scary_elevator
     with dissolve
-
+    stop ambient_layer fadeout 1.0
     play sound audio.sfx_elevator
 
     n "Не нажимаю на кнопку — отчаянно бьюсь в неё и втискиваюсь в открывшиеся створки лифта. Как заяц, загнанный в нору лисой."
@@ -324,7 +330,7 @@ label dream_elevator_route:
 
     n "Двери за спиной неспешно соединяются. Бросив взгляд через плечо, успеваю увидеть... нечто."
 
-    play sound audio.sfx_monster_punch
+    play ambient_layer audio.sfx_monster_punch loop volume 0.8
 
     n "Внутри всё сжимается."
 
@@ -338,7 +344,7 @@ label dream_elevator_route:
 
     n "Ноги подкашиваются. Не позволяю себе сползти на пол. Держусь за перила. Кто знает, что ждёт меня на следующих этажах?"
 
-    play sound audio.sfx_lamps
+    play sound audio.sfx_lamps volume 0.8
 
     #Мигание света в кабине
     scene black
@@ -353,6 +359,7 @@ label dream_elevator_route:
     n "Свет в лифте мигает. Кабина опасно покачивается, тормозя свой ход."
 
     stop ambient fadeout 1.0
+    $ renpy.music.set_volume(1.0, delay=2.0, channel="ambient_layer")
 
     n "Вжимаюсь в стену позади."
 
@@ -368,14 +375,18 @@ label dream_elevator_route:
     n "А может, так оно и есть на самом деле."
 
     n "Потом… становится тихо."
+    stop ambient_layer fadeout 1.0
 
     n "Лифт не движется. Стоит между этажами."
 
     n "Пальцы не слушаются, но я пробую разжать двери."
 
-    play sound audio.sfx_hotel_room_005
+    play sound audio.sfx_impact
+    play sound audio.sfx_monster_scream_far
 
     n "Ещё один удар. Снизу. Гораздо громче и ближе всех предыдущих."
+
+    play sound audio.sfx_impact
 
     n "Лифт вздрагивает."
 
@@ -401,7 +412,8 @@ label dream_elevator_route:
 
     #ЭКРАН СМЕРТИ
     stop music
-    play sound audio.sfx_time_scratch
+    stop ambient_layer fadeout 1.0
+
 
     scene black
     with hpunch
@@ -419,6 +431,8 @@ label dream_elevator_route:
         "> Воскрешение":
             pass
 
+    play sound audio.sfx_time_scratch
+    pause 1.2
     hide text
     with Dissolve(0.3)
 
@@ -429,6 +443,9 @@ label dream_elevator_route:
     #ВОЗВРАТ В КОРИДОР
     scene bg scary_hall
     with dissolve
+
+    $renpy.music.set_volume(0.7, delay=1.5, channel="ambient")
+    play ambient audio.amb_chase
 
     $ quick_menu = True
     window show
@@ -456,16 +473,14 @@ label dream_elevator_route:
 
     n "Цела. Жива. На том же месте, где пришла в себя после аварии."
 
-    play sound audio.sfx_fast_pulse
-
     n "Разум отказывается сшить две реальности. Но я каждой клеткой тела чувствую: если пойду тем же путём — опять умру."
 
     n "Нужно искать другой выход."
 
     n "Я слышу."
 
-    play sound audio.sfx_monster_walk
-    play music audio.mus_chase fadein 1.0
+    play sound audio.sfx_monster_scream_far
+    play music audio.mus_dead_body fadein 1.0
 
     n "Теперь я узнаю эти шаги в том, что казалось мне собственным пульсом."
 
@@ -489,6 +504,8 @@ label dream_straight_route:
         xalign 0.5
         yalign 0.45
     with dissolve
+
+    play sound audio.sfx_before_screamer
 
     n "На другом конце коридора силуэт, которого — я клянусь, — не было там прежде."
 

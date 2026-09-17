@@ -195,8 +195,8 @@ label prologue:
     # 6. АВАРИЯ И ПЕРЕХОД В КОШМАР
     # ---------------------------------------------------------------
     stop sound
-    $ renpy.music.set_audio_filter("ambient", af.Lowpass(frequency=400, q=1.0), replace=True, duration = 2.0)
-    stop ambient fadeout 1.5
+    $ renpy.music.set_audio_filter("ambient", af.Lowpass(frequency=400, q=1.0), replace=True, duration = 1.0)
+    stop ambient fadeout 1.0
     scene black
     with hpunch
 

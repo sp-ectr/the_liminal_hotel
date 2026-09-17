@@ -18,6 +18,7 @@ define audio.amb_forest_night_silent = "audio/amb/amb_forest_night_silent.ogg"
 define audio.amb_hotel_room = "audio/amb/amb_hotel_room.ogg"
 define audio.amb_restaurant = "audio/amb/amb_restaurant.ogg"
 define audio.amb_writing = "audio/amb/amb_writing.ogg"
+define audio.amb_chase = "audio/amb/amb_chase.ogg"
 
 
 
@@ -46,6 +47,12 @@ define audio.sfx_radio = "audio/sfx/sfx_radio.ogg"
 define audio.sfx_writing = "audio/sfx/sfx_writing.ogg"
 define audio.sfx_before_screamer = "audio/sfx/sfx_before_screamer.ogg"
 define audio.sfx_radio_interference_no_voices = "audio/sfx/sfx_radio_interference_no_voices.ogg"
+define audio.sfx_monster_punch = "audio/sfx/sfx_monster_punch.ogg"
+define audio.sfx_chase = "audio/sfx/sfx_chase.ogg"
+define audio.sfx_time_scratch = "audio/sfx/sfx_time_scratch.ogg"
+define audio.sfx_impact = "audio/sfx/sfx_impact.ogg"
+define audio.sfx_monster_scream_far = "audio/sfx/sfx_monster_scream_far.ogg"
+define audio.sfx_monster_scream_close = "audio/sfx/sfx_monster_scream_close.ogg"
 
 #Звуки отеля (001 - 009)
 define audio.sfx_hotel_room_001 = "audio/sfx/sfx_hotel_room-001.ogg"
@@ -73,9 +80,7 @@ define hotel_room_creaks = [
 
 #ВРЕМЕННЫЕ ЗАГЛУШКИ ДЛЯ ЕЩЁ НЕ СДАННЫХ ЗВУКОВ
 define audio.sfx_monster_walk = "<silence 0.0>"
-define audio.sfx_monster_punch = "<silence 0.0>"
-define audio.sfx_chase = "<silence 0.0>"
-define audio.sfx_time_scratch = "<silence 0.0>"
+
 
 
 #РЕГИСТРАЦИЯ АУДИО: ЗВУКИ ИНТЕРФЕЙСА (UI)
