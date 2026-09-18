@@ -53,27 +53,25 @@ define audio.sfx_time_scratch = "audio/sfx/sfx_time_scratch.ogg"
 define audio.sfx_impact = "audio/sfx/sfx_impact.ogg"
 define audio.sfx_monster_scream_far = "audio/sfx/sfx_monster_scream_far.ogg"
 define audio.sfx_monster_scream_close = "audio/sfx/sfx_monster_scream_close.ogg"
+define audio.sfx_cloth_2 = "audio/sfx/sfx_cloth_2.ogg"
+define audio.sfx_steps = "audio/sfx/sfx_steps.ogg"
+define audio.sfx_steps_2 = "audio/sfx/sfx_steps_2.ogg"
+define audio.sfx_steps_3 = "audio/sfx/sfx_steps_3.ogg"
 
 #Звуки отеля (001 - 009)
-define audio.sfx_hotel_room_001 = "audio/sfx/sfx_hotel_room-001.ogg"
-define audio.sfx_hotel_room_002 = "audio/sfx/sfx_hotel_room-002.ogg"
+#1 звук удалила
+#2 звук удалила
 define audio.sfx_hotel_room_003 = "audio/sfx/sfx_hotel_room-003.ogg"
-define audio.sfx_hotel_room_004 = "audio/sfx/sfx_hotel_room-004.ogg"
+#4 звук удалила
 define audio.sfx_hotel_room_005 = "audio/sfx/sfx_hotel_room-005.ogg"
 define audio.sfx_hotel_room_006 = "audio/sfx/sfx_hotel_room-006.ogg"
-define audio.sfx_hotel_room_007 = "audio/sfx/sfx_hotel_room-007.ogg"
 define audio.sfx_hotel_room_008 = "audio/sfx/sfx_hotel_room-008.ogg"
 define audio.sfx_hotel_room_009 = "audio/sfx/sfx_hotel_room-009.ogg"
 
 #Пул случайных фоновых скрипов номера отеля
 define hotel_room_creaks = [
-    audio.sfx_hotel_room_001,
-    audio.sfx_hotel_room_002,
     audio.sfx_hotel_room_003,
-    audio.sfx_hotel_room_004,
-    audio.sfx_hotel_room_005,
     audio.sfx_hotel_room_006,
-    audio.sfx_hotel_room_007,
     audio.sfx_hotel_room_008,
     audio.sfx_hotel_room_009,
 ]

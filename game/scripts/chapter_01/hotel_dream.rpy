@@ -71,7 +71,7 @@ label hotel_dream:
     scene bg scary_hall
     with Dissolve(1.5)
     play ambient audio.amb_chase fadein 2.0
-    $ renpy.music.set_volume(0.7, delay=1.5, channel="ambient")
+    $ renpy.music.set_volume(0.5, delay=1.5, channel="ambient")
 
     $ quick_menu = True
     window show
@@ -131,11 +131,13 @@ label hotel_dream:
 
     play ambient_layer audio.sfx_chase loop volume 0.6 fadein 0.2
     play music audio.mus_dead_body fadein 1.0
+    $ renpy.music.set_volume(0.4, delay=1.5, channel="music")
 
 
     n "Срываюсь на бег."
 
     n "Что бы за мной ни гналось, оно быстрее и сильнее меня."
+    $ renpy.music.set_volume(1.0, delay=1.5, channel="music")
 
     n "Ну же."
 
@@ -264,7 +266,7 @@ label dream_stairs_route:
     scene bg scary_hall
     with dissolve
 
-    $renpy.music.set_volume(0.7, delay=1.5, channel="ambient")
+    $renpy.music.set_volume(0.5, delay=1.5, channel="ambient")
     play ambient audio.amb_chase
     play sound audio.sfx_hotel_room_005
 
@@ -482,9 +484,13 @@ label dream_elevator_route:
     play sound audio.sfx_monster_scream_far
     play music audio.mus_dead_body fadein 1.0
 
+    $ renpy.music.set_volume(0.4, delay=1.5, channel="music")
+
     n "Теперь я узнаю эти шаги в том, что казалось мне собственным пульсом."
 
     n "Оно рядом…"
+
+    $ renpy.music.set_volume(1.0, delay=1.5, channel="music")
 
     jump dream_choice_hub
 

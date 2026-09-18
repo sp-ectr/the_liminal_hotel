@@ -73,7 +73,7 @@ label prologue:
 
     # МГНОВЕННОЕ ВЫКЛЮЧЕНИЕ РАДИО: резкий стоп песни и запуск чистого глухого дождя
     stop ambient fadeout 3.0
-    play sound audio.sfx_radio
+
     play ambient_layer audio.amb_forest_night_silent
 
     n "На какое-то время наступает тишина. Сперва приятная, но спустя мгновение — давящая."

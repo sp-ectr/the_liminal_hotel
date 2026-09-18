@@ -46,9 +46,9 @@ label meet_everett:
         play ambient audio.amb_chase fadein 1.0
 
     # Запускаем фоновые случайные скрипы номера отеля
-    show screen hotel_room_ambient_sfx
 
-    play sound audio.sfx_hotel_room_005
+
+
 
     $ quick_menu = True
     window show
@@ -72,7 +72,7 @@ label meet_everett:
     pause 1.0
     $ renpy.music.set_volume(1.0, channel="ambient")
 
-    play sound audio.sfx_slow_pulse
+    play sound audio.sfx_slow_pulse volume 0.8
 
     n "Пульс…"
 
@@ -98,7 +98,10 @@ label meet_everett:
     # Фиксируем сюжетный якорь времени для этого дела
     $ TimeEngine.create_anchor("hotel_room_awakening")
 
+
     play ambient audio.amb_hotel_room fadein 2.5
+
+    show screen hotel_room_ambient_sfx
 
     #Реакция на повторную петлю времени
     $ current_loop = TimeEngine.get_loop_count()
@@ -138,14 +141,11 @@ label meet_everett:
     doc neutral "Я дышу, верно. И вы тоже дышите. Кто бы вас ни преследовал, сейчас вы в безопасности."
 
     pause 3.0
-    play sound audio.sfx_fast_pulse
+    play sound audio.sfx_slow_pulse volume 0.8
 
     n "Он медленно перехватывает мою кисть и осторожно, будто опасаясь спугнуть, кладет мне на грудь. Под пальцами часто и рвано бьётся сердце."
 
     n "Что ж. Свою работу он знает."
-
-    pause 3.0
-    play sound audio.sfx_fast_pulse
 
     n "Делаю несколько глубоких вдохов прежде, чем он озвучит инструкцию. Я с ней тоже хорошо знакома. И, к счастью или к сожалению, успела не раз отработать на практике."
 
@@ -164,7 +164,7 @@ label meet_everett:
 
     me "Небольшая пульсация в висках. И ноют лицевые кости."
 
-    play sound audio.sfx_cloth
+    play sound audio.sfx_cloth volume 0.4
 
     n "Он тянет руку к нагрудному карману и выуживает оттуда небольшой длинный предмет."
 
@@ -203,7 +203,7 @@ label meet_everett:
 
     doc neutral "Если не станете усугублять ситуацию. Рекомендую соблюдать покой, не делать резких движений и сморкаться с осторожностью."
 
-    play sound audio.sfx_cloth
+    play sound audio.sfx_cloth volume 0.4
 
     n "Он убирает ручку-фонарик обратно в нагрудный карман."
 
@@ -249,7 +249,7 @@ label meet_everett:
 
     n "Он выжимает из себя полу-улыбку и откидывается в кресле, на котором, вероятно, провёл последние часы. Заметно по почти пустому графину с водой и паре кружек, от которых тянется едва уловимый терпкий кофейный аромат."
 
-    play sound audio.sfx_hotel_room_002
+    play sound audio.sfx_cloth_2 volume 0.6
 
     n "Я подтягиваю ноги, чтобы встать. Но не успеваю свесить их, как комната начинает плыть перед глазами."
 
@@ -444,7 +444,7 @@ label meet_everett_common_ending:
 
     n "Проходит ещё несколько минут."
 
-    play sound audio.sfx_cloth
+    play sound audio.sfx_cloth volume 0.4
 
     n "Доктор поднимает наручные часы на уровень глаз."
 
@@ -456,19 +456,16 @@ label meet_everett_common_ending:
 
     doc neutral "Тогда можете попробовать встать и сделать несколько шагов по прямой."
 
-    play sound audio.sfx_hotel_room_002
+    play sound audio.sfx_cloth_2 volume 0.6
 
     n "Я наконец-то свешиваю ноги с кровати."
 
     pause 2.0
-    play sound audio.sfx_hotel_room_007
+    play sound audio.sfx_steps
 
     n "Как и было велено, ступаю полутвёрдой походкой вперёд по тёмному паркету."
 
     n "Оборачиваюсь, выжидая новые указания."
-
-    pause 3.0
-    play sound audio.sfx_hotel_room_007
 
     n "Доктор лишь поправляет закатанные рукава рубашки, поднимается и проходит мимо меня к двери."
 
@@ -480,7 +477,7 @@ label meet_everett_common_ending:
 
     doc smile "Для этого можете позже найти меня в баре."
 
-    play sound audio.sfx_hotel_room_007
+    play sound audio.sfx_steps_3
     hide doctor
     with dissolve
 
@@ -505,8 +502,10 @@ label meet_everett_common_ending:
             $ quick_menu = False
             window hide
 
+            play sound audio.sfx_time_scratch
             show bg room_day_rain at time_rewind_glitch
             pause 0.5
+
 
             $ TimeEngine.rewind_to("hotel_room_awakening")
             return
