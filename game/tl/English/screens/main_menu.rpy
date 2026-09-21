@@ -1,20 +1,13 @@
-﻿# TODO: Translation updated at 2026-09-12 14:06
+# TODO: Translation updated at 2026-09-20
 
-translate English strings:
+translate english strings:
 
     # game/screens/main_menu.rpy:29
-    old "Start"
-    new ""
+    old "Начать"
+    new "Start"
 
-    # game/screens/main_menu.rpy:30
-    old "Options"
-    new ""
+    old "Настройки"
+    new "Options"
 
-    # game/screens/main_menu.rpy:31
-    old "About"
-    new ""
-
-    # game/screens/main_menu.rpy:32
-    old "Exit"
-    new ""
-
+    # «Об игре»/«Выход» уже переведены в screens/game_menu.rpy
+    # (строковые переводы глобальны по тексту, дублировать нельзя)

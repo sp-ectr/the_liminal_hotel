@@ -7,6 +7,20 @@ init offset = -1
 default use_black_textbox = False
 default hide_namebox = False
 
+init -500 python:
+    # Арт-фонов кнопок в gui/button/ нет (кнопки текстовые; арт задаётся явно
+    # на choice-экране и в главном меню). Штатный gui.button_properties движка
+    # всегда подставляет gui/button/[prefix_]background.png и роняет игру,
+    # если файла нет — вырезаем фон из свойств кнопок.
+    _gui_button_properties_orig = gui.button_properties
+
+    def _text_only_button_properties(*args, **kwargs):
+        rv = _gui_button_properties_orig(*args, **kwargs)
+        rv.pop("background", None)
+        return rv
+
+    gui.button_properties = _text_only_button_properties
+
 style default:
     properties gui.text_properties()
     language gui.language
@@ -35,20 +49,18 @@ style label_text is gui_text:
 style prompt_text is gui_text:
     properties gui.text_properties("prompt")
 
+# gui/bar/*.png в поставке нет — фоновые картинки бара не задаём
 style bar:
     ysize gui.bar_size
-    left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-    right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
 
 style vbar:
     xsize gui.bar_size
-    top_bar Frame("gui/bar/top.png", gui.vbar_borders, tile=gui.bar_tile)
-    bottom_bar Frame("gui/bar/bottom.png", gui.vbar_borders, tile=gui.bar_tile)
 
+# Горизонтального скроллбара арт нет — временная заливка
 style scrollbar:
     ysize gui.scrollbar_size
-    base_bar Frame("gui/scrollbar/horizontal_[prefix_]bar.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame("gui/scrollbar/horizontal_[prefix_]thumb.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
+    base_bar "#ffffff33"
+    thumb "#c29b38cc"
 
 style vscrollbar:
     xsize gui.scrollbar_size
@@ -60,14 +72,16 @@ style slider:
     base_bar Frame("gui/slider/horizontal_[prefix_]bar.png", gui.slider_borders, tile=gui.slider_tile)
     thumb "gui/slider/horizontal_[prefix_]thumb.png"
 
+# Вертикального слайдера арт нет — временная заливка
 style vslider:
     xsize gui.slider_size
-    base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
-    thumb "gui/slider/vertical_[prefix_]thumb.png"
+    base_bar "#ffffff33"
+    thumb "#c29b38cc"
 
+# gui/frame.png в поставке нет — все фреймы задают фон явно
 style frame:
     padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    background None
 
 
 ################################################################################
@@ -100,7 +114,7 @@ style window:
     xsize 1480
     ysize 260
     padding (0, 0, 0, 0)
-    background ConditionSwitch("use_black_textbox", Image("images/gui/text_box_black.png", xalign=0.5, yalign=1.0), "True", Image("images/gui/text_box.png", xalign=0.5, yalign=1.0))
+    background ConditionSwitch("use_black_textbox", Image("gui/text_box_black.png", xalign=0.5, yalign=1.0), "True", Image("gui/text_box.png", xalign=0.5, yalign=1.0))
 
 style say_label is default
 style say_dialogue is default
@@ -144,7 +158,34 @@ screen choice(items):
     style_prefix "choice"
     vbox:
         for i in items:
-            textbutton i.caption action i.action
+            # перемотка времени — отдельная крупная кнопка
+            $ cap = i.caption.lower()
+            $ is_rewind = ("перемот" in cap) or ("отмот" in cap) or ("скачок" in cap) or ("воскрешение" in cap) or ("rewind" in cap)
+            if is_rewind:
+                $ rewind_caption = i.caption.strip()
+                $ rewind_caption = rewind_caption[1:].strip() if rewind_caption.startswith(">") else rewind_caption
+                $ rewind_caption = rewind_caption.upper()
+
+                button:
+                    style "choice_rewind_button"
+                    action i.action
+                    idle_background "ui choice_rewind_idle"
+                    hover_background "ui choice_rewind_hover"
+
+                    fixed:
+                        xysize (1155, 297)
+
+                        text rewind_caption:
+                            style "choice_rewind_button_text"
+                            xpos 0
+                            ypos 133
+                            xsize 980
+                            yanchor 0.5
+                            text_align 0.5
+            else:
+                textbutton i.caption action i.action:
+                    idle_background "ui choice_idle"
+                    hover_background "ui choice_hover"
 
 style choice_vbox is vbox
 style choice_button is button
@@ -159,8 +200,18 @@ style choice_vbox:
 style choice_button is default:
     properties gui.button_properties("choice_button")
 
+style choice_rewind_button is choice_button:
+    xsize 1155
+    ysize 297
+    padding (0, 0, 0, 0)
+
 style choice_button_text is default:
     properties gui.text_properties("choice_button")
+
+style choice_rewind_button_text is choice_button_text:
+    size 46
+    color "#161212"
+    bold True
 
 screen input(prompt):
     style_prefix "input"

@@ -38,7 +38,21 @@ define config.has_quicksave = False
 define config.has_autosave = False
 
 #Язык по умолчанию
-define config.default_language = "english"
+# Язык выбирается на экране выбора языка при каждом запуске и хранится во
+# встроенных настройках движка (_preferences.language): "english" или None (=русский).
+define config.default_language = None
+
+init -10 python:
+    # Выбор языка храним в persistent.lang_choice — эти данные гарантированно
+    # переживают перезапуск. На старте синхронизируем с них настройки движка,
+    # чтобы застрявший хвост в _preferences.language ничего не перекрыл.
+    if persistent.lang_choice is not None:
+        _preferences.language = "english" if persistent.lang_choice == "english" else None
+    if _preferences.language == "english":
+        config.language = "english"
+    else:
+        config.language = None
+
 define _game_menu_screen = "preferences"
 
 #Настройка сборки

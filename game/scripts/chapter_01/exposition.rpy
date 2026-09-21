@@ -37,8 +37,8 @@ label exposition:
     play ambient audio.amb_writing fadein 1.5
 
 
-    #2 КИНЕМАТОГРАФИЧНЫЙ ТИТР ПО ЦЕНТРУ
-    show text "{color=#b51a1a}{size=90}{font=fonts/AlumniSansPinstripe.ttf}Самые громкие истории начинаются с убийства.{/font}{/size}{/color}" at truecenter with Dissolve(1.2)
+    # 2. КИНЕМАТОГРАФИЧНЫЙ ТИТР ПО ЦЕНТРУ (шрифт наследуется из gui)
+    show text _("{color=#b51a1a}{size=90}Самые громкие истории начинаются с убийства.{/size}{/color}") at truecenter with Dissolve(1.2)
     pause
     hide text with Dissolve(0.8)
 

@@ -58,14 +58,15 @@ define gui.interface_text_color = '#ffffff'
 
 ## Шрифты и их размеры #########################################################
 
-## Шрифт, используемый внутриигровым текстом.
-define gui.text_font = "DejaVuSans.ttf"
-
-## Шрифт, используемый именами персонажей.
-define gui.name_text_font = "DejaVuSans.ttf"
-
-## Шрифт, используемый текстом вне игры.
-define gui.interface_text_font = "DejaVuSans.ttf"
+## Единая пара шрифтов на оба языка — у обоих полные латиница и кириллица,
+## поэтому ветвления по языку больше нет:
+##   Jost Regular — весь текст и интерфейс
+##   Roboto Condensed Medium — только экран выбора дел (CASE_FONT в case_select.rpy)
+init python:
+    gui.text_font = "fonts/Jost/Jost-Regular.ttf"
+    gui.name_text_font = "fonts/Jost/Jost-Regular.ttf"
+    gui.interface_text_font = "fonts/Jost/Jost-Regular.ttf"
+    gui.accent_font = "fonts/Jost/Jost-Regular.ttf"
 
 ## Размер нормального текста диалога.
 define gui.text_size = 33
@@ -89,8 +90,8 @@ define gui.title_text_size = 75
 ## Главное и игровое меню. #####################################################
 
 ## Изображения, используемые в главном и игровом меню.
-define gui.main_menu_background = "gui/main_menu.png"
-define gui.game_menu_background = "gui/game_menu.png"
+define gui.main_menu_background = "gui/main_menu/menu.png"
+define gui.game_menu_background = "gui/main_menu/menu.png"
 
 
 ## Диалог ######################################################################
@@ -209,10 +210,10 @@ define gui.quick_button_text_selected_color = gui.accent_color
 ##
 ## Кнопки выбора используются во внутриигровых меню.
 
-define gui.choice_button_width = 1185
-define gui.choice_button_height = None
+define gui.choice_button_width = 1002
+define gui.choice_button_height = 62
 define gui.choice_button_tile = False
-define gui.choice_button_borders = Borders(150, 8, 150, 8)
+define gui.choice_button_borders = Borders(0, 0, 0, 0)
 define gui.choice_button_text_font = gui.text_font
 define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5
@@ -345,12 +346,15 @@ define gui.unscrollable = "hide"
 ## Количество диалоговых блоков истории, которые Ren'Py будет хранить.
 define config.history_length = 250
 
+## Теги разметки, разрешённые в тексте истории (пусто — вырезать все)
+define gui.history_allow_tags = set()
+
 ## Высота доступных записей на экране истории, или None, чтобы задать высоту в
 ## зависимости от производительности.
-define gui.history_height = 210
+define gui.history_height = None
 
 ## Дополнительное пространство добавляемое между записями экрана истории.
-define gui.history_spacing = 0
+define gui.history_spacing = 12
 
 ## Местоположение, ширина и выравнивание заголовка, показывающего имя говорящего
 ## персонажа.

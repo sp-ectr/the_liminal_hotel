@@ -1,28 +1,28 @@
-﻿# TODO: Translation updated at 2026-09-12 14:06
+﻿# TODO: Translation updated at 2026-09-14 14:24
 
-translate English strings:
+translate english strings:
 
     # game/scripts/characters.rpy:7
     old "Я"
-    new ""
+    new "Me"
 
     # game/scripts/characters.rpy:22
     old "???"
-    new ""
+    new "???"
 
     # game/scripts/characters.rpy:26
     old "Беглец"
-    new ""
+    new "A soft fugitive"
 
     # game/scripts/characters.rpy:29
     old "Наблюдатель"
-    new ""
+    new "The cunning hotel keeper"
 
     # game/scripts/characters.rpy:32
     old "Писатель"
-    new ""
+    new "A flirtatious writer"
 
     # game/scripts/characters.rpy:35
     old "Радио"
-    new ""
+    new "Radio"
 

@@ -1,52 +1,36 @@
-﻿# TODO: Translation updated at 2026-09-12 14:06
+# TODO: Translation updated at 2026-09-20
 
-translate English strings:
+translate english strings:
 
-    # game/screens/case_select.rpy:28
-    old "ДЕЛА РАССЛЕДОВАНИЯ"
-    new ""
+    # game/screens/case_select.rpy
+    old "АРХИВ РАССЛЕДОВАНИЙ"
+    new "INVESTIGATION ARCHIVE"
 
-    # game/screens/case_select.rpy:35
     old "Выберите активное дело для продолжения или начните новое"
-    new ""
+    new "Select an active case to continue, or start a new one"
 
-    # game/screens/case_select.rpy:50
-    old "НАЗАД В МЕНЮ"
-    new ""
+    # «Назад» переводится глобальной записью в screens/game_menu.rpy
+    # (здесь своя строка — капсовая «НАЗАД» с «BACK»)
+    old "НАЗАД"
+    new "BACK"
 
-    # game/screens/case_select.rpy:81
-    old "ДЕЛО #{0}"
-    new ""
+    old "ДЕЛО #[p_id]"
+    new "CASE #[p_id]"
 
-    # game/screens/case_select.rpy:87
-    old "Петля {0}"
-    new ""
+    old "Петля [loop_count]"
+    new "Loop [loop_count]"
 
-    # game/screens/case_select.rpy:106
     old "НЕТ СКРИНШОТА"
-    new ""
+    new "SCREENSHOT MISSING"
 
-    # game/screens/case_select.rpy:111
-    old "АРХИВ ПУСТ"
-    new ""
-
-    # game/screens/case_select.rpy:138
     old "ПРОДОЛЖИТЬ"
-    new ""
+    new "CONTINUE"
 
-    # game/screens/case_select.rpy:145
     old "Стереть дело"
-    new ""
+    new "Erase case"
 
-    # game/screens/case_select.rpy:150
     old "Вы уверены, что хотите стереть Дело #{0}? Весь прогресс будет уничтожен!"
-    new ""
+    new "Are you sure you want to erase case #{0}? All prior progress will be lost!"
 
-    # game/screens/case_select.rpy:156
-    old "Дело свободно для нового расследования"
-    new ""
-
-    # game/screens/case_select.rpy:175
     old "НАЧАТЬ РАССЛЕДОВАНИЕ"
-    new ""
-
+    new "START INVESTIGATION"

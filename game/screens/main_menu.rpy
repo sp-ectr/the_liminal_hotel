@@ -15,7 +15,7 @@ screen main_menu():
 
     add "bg menu"
 
-    add "images/gui/logo.png":
+    add "gui/main_menu/logo.png":
         xalign 0.5
         yalign 0.46
         at menu_logo_intro
@@ -26,10 +26,10 @@ screen main_menu():
         spacing 70
         at menu_buttons_intro
 
-        use main_menu_nav_button(_("Start"), ShowMenu("case_select"), click_sound=audio.ui_start)
-        use main_menu_nav_button(_("Options"), ShowMenu("preferences"))
-        use main_menu_nav_button(_("About"), ShowMenu("about"))
-        use main_menu_nav_button(_("Exit"), Quit(confirm=False))
+        use main_menu_nav_button(_("Начать"), ShowMenu("case_select"), click_sound=audio.ui_start)
+        use main_menu_nav_button(_("Настройки"), ShowMenu("preferences"))
+        use main_menu_nav_button(_("Об игре"), ShowMenu("about"))
+        use main_menu_nav_button(_("Выход"), Quit(confirm=False))
 
 # КОМПОНЕНТ КНОПКИ ГЛАВНОГО МЕНЮ
 screen main_menu_nav_button(label_text, button_action, click_sound=None):
@@ -44,10 +44,9 @@ screen main_menu_nav_button(label_text, button_action, click_sound=None):
         # Если задан специальный звук (ui_start) — играет он, иначе рандомный клик (1 или 2)
         activate_sound (click_sound if click_sound else renpy.random.choice([audio.ui_click_1, audio.ui_click_2]))
 
-        hover_background Transform("images/gui/pickMenu.png", align=(0.5, 0.5))
+        hover_background Transform("gui/main_menu/pickMenu.png", align=(0.5, 0.5))
 
         text label_text:
-            font "fonts/AlumniSansPinstripe.ttf"
             size 62
             color "#d6d6d6"
             hover_color "#ffffff"

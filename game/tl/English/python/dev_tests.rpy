@@ -1,12 +1,12 @@
-﻿# TODO: Translation updated at 2026-09-12 14:06
+# TODO: Translation updated at 2026-09-14 14:24
 
-translate English strings:
+translate english strings:
 
     # game/python/dev_tests.rpy:98
     old "ТЕСТ ОТКАЗОУСТОЙЧИВОСТИ: УСПЕХ! Слот A спасен."
-    new ""
+    new "ТЕСТ ОТКАЗОУСТОЙЧИВОСТИ: УСПЕХ! Слот A спасен."
 
     # game/python/dev_tests.rpy:164
     old "ТЕСТ ОТКАЗОУСТОЙЧИВОСТИ: Оба слота повреждены."
-    new ""
+    new "ТЕСТ ОТКАЗОУСТОЙЧИВОСТИ: Оба слота повреждены."
 

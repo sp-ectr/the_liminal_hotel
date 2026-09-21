@@ -97,7 +97,101 @@ image bg room_night = "images/bg/main_room_night.png"
 image bg room_night_rain = "images/bg/main_room_night_rain.png"
 image bg office_nolight = "images/bg/office_nolight.png"
 image bg office_projector = "images/bg/office_projector.png"
-image bg menu = "images/bg/menu.png"
+image bg menu = "gui/main_menu/menu.png"
+
+# Белая вспышка (scene white / show white в скриптах)
+image white = Solid("#ffffff")
+
+
+#РЕГИСТРАЦИЯ UI-СПРАЙТОВ
+image ui choice_idle = "gui/button/choice_idle_background.png"
+image ui choice_hover = "gui/button/choice_hover_background.png"
+image ui choice_rewind_idle = "gui/button/choice_rewind_idle.png"
+image ui choice_rewind_hover = "gui/button/choice_rewind_hover.png"
+
+
+#РЕГИСТРАЦИЯ ФОНОВ: НОВЫЕ ЛОКАЦИИ (PNG)
+image bg atrium = "images/bg/atrium_back.png"
+image bg desi_room = "images/bg/desi_room_back.png"
+image bg elevator = "images/bg/elevator_back.png"
+image bg elevator_inside = "images/bg/scary_elevator_inside_back.png"
+image bg restaurant = "images/bg/restaurant_back.png"
+image bg scary_elevator = "images/bg/scary_elevator_back.png"
+image bg scary_elevator_inside = "images/bg/scary_elevator_inside_back.png"
+image bg window_deer = "images/bg/window_deer_back.png"
+
+
+#РЕГИСТРАЦИЯ ВИДЕО-ФОНОВ (Movie, зациклены по умолчанию)
+image bg endless_stairs = Movie(play="images/bg/endless_stairs.webm")
+image bg forest_day = Movie(play="images/bg/forest_day.webm")
+# Группа "forest": при переключении олень/без оленя последний кадр предыдущего
+# ролика держится на экране, пока новый не отдаст первый кадр (без квадратов в стыке)
+image bg forest_deer = Movie(play="images/bg/forest_deer.webm", group="forest")
+image bg forest_no_deer = Movie(play="images/bg/forest_no_deer.webm", group="forest")
+image bg parking = Movie(play="images/bg/parking_back.webm", group="parking")
+image bg parking_no_birds = Movie(play="images/bg/parking_no_birds.webm", group="parking")
+image bg scary_hall = Movie(play="images/bg/scary_hall_back.webm")
+image bg scary_stairs = Movie(play="images/bg/scary_stairs_back.webm")
+
+
+#РЕГИСТРАЦИЯ CG
+image cg ilay = "images/cg/ilay.png"
+
+# Джампскейр-олень: mp4 без альфы — фон кадра чёрный (на тёмной сцене ок).
+# Захотим прозрачный оверлей — тогда конвертируем transparent.mov
+# в пару webm (play+mask) и меняем регистрацию
+image cg deer_jumpscare = Movie(play="images/bg/deer_jumpscare_sprite.webm", loop=False)
+
+
+#РЕГИСТРАЦИЯ СПРАЙТОВ ПЕРСОНАЖЕЙ (эмоции)
+# Доктор: без очков — «doctor <эмоция>», в очках — «doctor glasses <эмоция>»
+image doctor frown = "images/characters/doctor/without_glasses/frown.png"
+image doctor grumpy = "images/characters/doctor/without_glasses/grumpy.png"
+image doctor neutral = "images/characters/doctor/without_glasses/neutral.png"
+image doctor skepticism = "images/characters/doctor/without_glasses/skepticism.png"
+image doctor smile = "images/characters/doctor/without_glasses/smile.png"
+image doctor surprise = "images/characters/doctor/without_glasses/surprise.png"
+image doctor glasses frown = "images/characters/doctor/glasses/frown.png"
+image doctor glasses grumpy = "images/characters/doctor/glasses/grumpy.png"
+image doctor glasses neutral = "images/characters/doctor/glasses/neutral.png"
+image doctor glasses skepticism = "images/characters/doctor/glasses/skepticism.png"
+image doctor glasses smile = "images/characters/doctor/glasses/smile.png"
+image doctor glasses surprise = "images/characters/doctor/glasses/surprise.png"
+
+# Беглец
+image fugitive big_smile = "images/characters/fugitive/big_smile.png"
+image fugitive embarrassed = "images/characters/fugitive/embarrassed.png"
+image fugitive nervous = "images/characters/fugitive/nervous.png"
+image fugitive neutral = "images/characters/fugitive/neutral.png"
+image fugitive scared = "images/characters/fugitive/scared.png"
+image fugitive smile = "images/characters/fugitive/smile.png"
+
+# Наблюдатель
+image observer neutral = "images/characters/observer/neutral.png"
+image observer smile = "images/characters/observer/smile.png"
+
+# Писатель
+image writer angry = "images/characters/writer/angry.png"
+image writer neutral = "images/characters/writer/neutral.png"
+image writer sad = "images/characters/writer/sad.png"
+image writer smile = "images/characters/writer/smile.png"
+image writer smile2 = "images/characters/writer/smile2.png"
+image writer soft_smile = "images/characters/writer/soft_smile.png"
+
+transform writer_normal:
+    zoom 0.47
+    xalign 0.5
+    yalign 1.0
+
+transform writer_left:
+    zoom 0.47
+    xalign 0.25
+    yalign 1.0
+
+
+#РЕГИСТРАЦИЯ NPC (статичные)
+image bandit = "images/nps/bandit.png"
+image maid = "images/nps/maid.png"
 
 
 #СПЕЦЭФФЕКТЫ И АНИМАЦИИ (ATL)

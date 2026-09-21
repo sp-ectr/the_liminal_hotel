@@ -1,16 +1,16 @@
-﻿# TODO: Translation updated at 2026-09-12 14:06
+﻿# TODO: Translation updated at 2026-09-14 14:24
 
-translate English strings:
+translate english strings:
 
     # game/screens/hud.rpy:9
     old "Доска улик (Tab)"
-    new ""
+    new "Evidence wall (Tab)"
 
     # game/screens/hud.rpy:12
     old "Авто"
-    new ""
+    new "Auto"
 
     # game/screens/hud.rpy:13
     old "Опции"
-    new ""
+    new "Options"
 

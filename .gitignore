@@ -35,3 +35,6 @@ strings.json
 .vscode/
 Thumbs.db
 .DS_Store
+/tl_tool.py
+/tl_fill_13.txt
+/translation_batch_01.xlsx

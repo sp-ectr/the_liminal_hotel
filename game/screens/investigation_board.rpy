@@ -28,7 +28,7 @@ screen investigation_board():
     default selected_clue = None
 
     #Фон
-    add "images/bg/menu.png"
+    add "gui/main_menu/menu.png"
     add "#000000A0"
 
     $ meta = TimeEngine.get_meta()
@@ -45,13 +45,13 @@ screen investigation_board():
         yalign 0.04
         spacing 25
 
-        text _("ДОСКА РАССЛЕДОВАНИЯ"):
-            font "fonts/AlumniSansPinstripe.ttf"
+        text _("ДОСКА УЛИК"):
             size 55
             color "#c29b38"
             outlines [(2, "#000000", 0, 0)]
 
-        text _("Улик обнаружено: {0} / {1}").format(len(unlocked_clues), total_clues_count):
+        $ unlocked_count = len(unlocked_clues)
+        text _("Улик обнаружено: [unlocked_count] / [total_clues_count]"):
             size 22
             color "#aaaaaa"
             yalign 0.6
@@ -60,11 +60,16 @@ screen investigation_board():
     for clue in unlocked_clues:
         use clue_pin_card(clue)
 
+    #Декор: диктофон (масштаб от исходных 790x790)
+    add "gui/dictaphone.png":
+        xalign 0.9
+        yalign 0.85
+        zoom 0.38
+
     #Кнопки закрытия
     textbutton _("ЗАКРЫТЬ ДОСКУ (Tab / Esc)"):
         xalign 0.95
         yalign 0.04
-        text_font "fonts/AlumniSansPinstripe.ttf"
         text_size 40
         text_color "#d6d6d6"
         text_hover_color "#ffffff"
@@ -153,13 +158,13 @@ screen clue_inspect_modal(clue):
                 spacing 15
                 xfill True
 
-                text _("({0})").format(clue.category.upper()):
+                $ cat_label = "({0})".format(renpy.translate_string(clue.category).upper())
+                text cat_label:
                     size 16
                     color "#c29b38"
                     bold True
 
                 text clue.title:
-                    font "fonts/AlumniSansPinstripe.ttf"
                     size 48
                     color "#ffffff"
 

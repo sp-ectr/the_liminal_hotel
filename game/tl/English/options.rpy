@@ -1,8 +1,8 @@
-﻿# TODO: Translation updated at 2026-09-12 14:06
+﻿# TODO: Translation updated at 2026-09-14 14:24
 
-translate English strings:
+translate english strings:
 
     # game/options.rpy:2
     old "The Liminal Hotel"
-    new ""
+    new "The Liminal Hotel"
 

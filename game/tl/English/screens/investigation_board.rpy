@@ -1,24 +1,16 @@
-﻿# TODO: Translation updated at 2026-09-12 14:06
+# TODO: Translation updated at 2026-09-20
 
-translate English strings:
+translate english strings:
 
-    # game/screens/investigation_board.rpy:48
-    old "ДОСКА РАССЛЕДОВАНИЯ"
-    new ""
+    # game/screens/investigation_board.rpy
+    old "ДОСКА УЛИК"
+    new "EVIDENCE WALL"
 
-    # game/screens/investigation_board.rpy:54
-    old "Улик обнаружено: {0} / {1}"
-    new ""
+    old "Улик обнаружено: [unlocked_count] / [total_clues_count]"
+    new "Clues found: [unlocked_count] / [total_clues_count]"
 
-    # game/screens/investigation_board.rpy:64
     old "ЗАКРЫТЬ ДОСКУ (Tab / Esc)"
-    new ""
+    new "CLOSE BOARD (Tab / Esc)"
 
-    # game/screens/investigation_board.rpy:156
-    old "({0})"
-    new ""
-
-    # game/screens/investigation_board.rpy:181
     old "Закрыть осмотр (Esc)"
-    new ""
-
+    new "Close the view (Esc)"

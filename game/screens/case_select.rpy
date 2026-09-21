@@ -1,6 +1,7 @@
 init python:
     import time
-    #Action для загрузки дела
+
+    # Action для загрузки дела
     class LoadCase(Action):
         def __init__(self, profile_id, slot_name):
             self.profile_id = profile_id
@@ -14,166 +15,278 @@ init python:
             return self.slot_name is not None and TimeEngine.is_slot_valid(self.slot_name)
 
 
-#ЭКРАН ВЫБОРА 3 ДЕЛ
+define CASE_FONT = "fonts/Roboto_Condensed/RobotoCondensed-Medium.ttf"
+
+# Штамп «продолжить»: из арта 366x275 вырезаем только саму печать
+# (видимая зона ~(26,86)-(340,184) + поля). im.Scale всего арта в 330x90
+# сплющивал печать в полоску — текст торчал над ней
+define CONTINUE_STAMP_IDLE = LiveCrop((16, 76, 334, 118), "gui/case_select/button_continue.png")
+define CONTINUE_STAMP_HOVER = im.Scale("gui/case_select/button_continue_hover.png", 334, 118)
+
+
+# Карточки делаем больше, чтобы все элементы точно помещались внутри бумаги
+define CASE_CARD_SIZE = {
+    1: (610, 760),
+    2: (560, 735),
+    3: (660, 760)
+}
+
+
+# ЭКРАН ВЫБОРА 3 ДЕЛ
 screen case_select():
     tag menu
-    add "images/bg/menu.png"
-    add "#000000B0"
 
+    add "gui/case_select/bg_case_select.png"
+
+    # Заголовок
     vbox:
         xalign 0.5
-        yalign 0.12
-        spacing 10
+        yalign 0.135
+        spacing 5
 
-        text _("ДЕЛА РАССЛЕДОВАНИЯ"):
-            font "fonts/AlumniSansPinstripe.ttf"
-            size 70
-            color "#c29b38"
+        text _("АРХИВ РАССЛЕДОВАНИЙ"):
+            font CASE_FONT
+            size 48
+            color "#ffffff"
             xalign 0.5
-            outlines [(2, "#000000", 0, 0)]
 
         text _("Выберите активное дело для продолжения или начните новое"):
-            size 22
-            color "#888888"
+            font CASE_FONT
+            size 24
+            color "#cc0000"
             xalign 0.5
 
-    # 3 Карточки дел
+
+    # 3 конверта дел
     hbox:
         xalign 0.5
-        yalign 0.55
-        spacing 40
+        yalign 0.62
+        spacing 18
 
         for p_id in (1, 2, 3):
             use case_card(p_id)
 
-    # Кнопка возврата в главное меню
-    textbutton _("НАЗАД В МЕНЮ"):
+
+    # Возврат в игру
+    textbutton _("НАЗАД"):
         xalign 0.5
-        yalign 0.92
-        text_font "fonts/AlumniSansPinstripe.ttf"
-        text_size 45
-        text_color "#aaaaaa"
+        yalign 0.93
+        text_size 30
+        text_color "#888888"
         text_hover_color "#ffffff"
         action Return()
 
-
-
-#КАРТОЧКА ДЕЛА
+# КАРТОЧКА ДЕЛА
 screen case_card(p_id):
+
     $ has_save = TimeEngine.has_save(p_id)
     $ latest_slot = TimeEngine.get_latest_save(p_id)
     $ meta = TimeEngine.get_meta(p_id)
     $ loop_count = meta.get("loop_count", 1)
 
-    frame:
-        xsize 420
-        ysize 480
-        background "#1a1616cc"
-        padding (20, 20)
+    # Битое дело:
+    $ is_broken = meta.get("corrupted", False) or (has_save and not TimeEngine.is_slot_valid(latest_slot))
 
-        vbox:
-            spacing 15
-            xfill True
+    $ card_w, card_h = CASE_CARD_SIZE[p_id]
 
-            # Заголовок карточки
-            hbox:
-                xfill True
-                text _("ДЕЛО #{0}").format(p_id):
-                    font "fonts/AlumniSansPinstripe.ttf"
-                    size 42
-                    color ("#c29b38" if has_save else "#666666")
+    $ art = (
+        ("gui/case_broken_%d.png" % p_id)
+        if is_broken
+        else ("gui/case_select/case%d.png" % p_id)
+    )
 
-                if has_save:
-                    text _("Петля {0}").format(loop_count):
-                        size 20
-                        color "#ff4444"
-                        yalign 0.5
 
-            # Превью скриншота
-            frame:
-                xsize 380
-                ysize 214
+    fixed:
+        xsize card_w
+        ysize card_h
+
+
+        # Сам конверт
+        add art:
+            xalign 0.5
+            yalign 0.0
+            xsize card_w
+            ysize card_h
+            fit "contain"
+
+
+        # -------------------------
+        # ШАПКА ДЕЛА
+        # -------------------------
+
+        hbox:
+            xalign 0.5
+            ypos 118
+            spacing 10
+
+            text _("ДЕЛО #[p_id]"):
+                font CASE_FONT
+                size 31
+                color "#1a1a1a"
+
+            if has_save:
+                text _("Петля [loop_count]"):
+                    font CASE_FONT
+                    size 16
+                    color "#cc0000"
+                    yalign 0.6
+
+
+
+        # -------------------------
+        # ПОВРЕЖДЁННОЕ ДЕЛО
+        # -------------------------
+
+        if is_broken:
+
+            text _("[ ДЕЛО ПОВРЕЖДЕНО ]"):
                 xalign 0.5
-                background "#00000088"
+                ypos 455
+                font CASE_FONT
+                size 24
+                color "#cc0000"
 
-                if has_save and latest_slot:
+
+
+        # -------------------------
+        # ДЕЛО С СОХРАНЕНИЕМ
+        # -------------------------
+
+        elif has_save and latest_slot:
+
+            # Скриншот
+            frame:
+                xalign 0.5
+                ypos 205
+                padding (6, 6)
+                background "#000000"
+
+                fixed:
+                    xsize 315
+                    ysize 177
+
                     $ thumb_img = renpy.slot_screenshot(latest_slot)
+
                     if thumb_img:
                         add thumb_img:
                             xalign 0.5
                             yalign 0.5
+                            fit "contain"
+                            xsize 315
+                            ysize 177
+
                     else:
                         text _("НЕТ СКРИНШОТА"):
-                            align (0.5, 0.5)
+                            xalign 0.5
+                            yalign 0.5
+                            font CASE_FONT
+                            size 16
                             color "#444444"
-                            size 20
-                else:
-                    text _("АРХИВ ПУСТ"):
-                        align (0.5, 0.5)
-                        color "#444444"
-                        size 24
 
-            # Кнопки управления
-            if has_save and latest_slot:
-                $ mtime = renpy.slot_mtime(latest_slot)
-                if mtime:
-                    $ time_str = time.strftime("%d.%m.%Y | %H:%M", time.localtime(mtime))
-                    text "[time_str]":
-                        size 18
-                        color "#888888"
-                        xalign 0.5
-                else:
-                    null height 22
 
-                null height 5
+            # Дата последнего захода
+            $ mtime = renpy.slot_mtime(latest_slot)
 
-                # 1. Загрузка
-                button:
-                    xfill True
-                    ysize 45
-                    background "#c29b38"
-                    hover_background "#dfb448"
-                    action LoadCase(p_id, latest_slot)
+            if mtime:
+                $ time_str = time.strftime(
+                    "%d.%m.%Y | %H:%M",
+                    time.localtime(mtime)
+                )
 
-                    text _("ПРОДОЛЖИТЬ"):
-                        align (0.5, 0.5)
-                        color "#000000"
-                        size 20
-                        bold True
-
-                # 2. Стереть дело
-                textbutton _("Стереть дело"):
+                text "[time_str]":
                     xalign 0.5
-                    text_size 16
-                    text_color "#ff444488"
-                    text_hover_color "#ff4444"
-                    action Confirm(
-                        _("Вы уверены, что хотите стереть Дело #{0}? Весь прогресс будет уничтожен!").format(p_id),
-                        Function(TimeEngine.delete_profile, p_id)
+                    ypos 395
+                    font CASE_FONT
+                    size 14
+                    color "#1a1a1a"
+
+
+            # Продолжить
+            button:
+                xalign 0.5
+                ypos 435
+                xsize 334
+                ysize 118
+
+                background CONTINUE_STAMP_IDLE
+                hover_background CONTINUE_STAMP_HOVER
+
+                action LoadCase(p_id, latest_slot)
+
+                text _("ПРОДОЛЖИТЬ"):
+                    xalign 0.5
+                    yalign 0.5
+                    font CASE_FONT
+                    size 27
+                    color "#cc0033"
+                    hover_color "#ffffff"
+
+
+
+        # -------------------------
+        # ПУСТОЕ ДЕЛО
+        # -------------------------
+
+        else:
+
+            # Чёрное пустое окно
+            frame:
+                xalign 0.5
+                ypos 205
+                padding (6, 6)
+                background "#000000"
+
+                fixed:
+                    xsize 315
+                    ysize 177
+
+
+            # Начать расследование
+            button:
+                xalign 0.5
+                ypos 435
+                xsize 334
+                ysize 118
+
+                background CONTINUE_STAMP_IDLE
+                hover_background CONTINUE_STAMP_HOVER
+
+                action [
+                    Function(TimeEngine.set_profile, p_id),
+                    Start()
+                ]
+
+                text _("НАЧАТЬ РАССЛЕДОВАНИЕ"):
+                    xalign 0.5
+                    yalign 0.5
+                    font CASE_FONT
+                    size 22
+                    color "#1a1a1a"
+                    hover_color "#cc0000"
+
+
+
+        # -------------------------
+        # СТЕРЕТЬ ДЕЛО
+        # -------------------------
+
+        if has_save:
+
+            textbutton _("Стереть дело"):
+                xalign 0.5
+                ypos 560
+                text_font CASE_FONT
+                text_size 13
+                text_color "#cc0000aa"
+                text_hover_color "#cc0000"
+
+                action Confirm(
+                    renpy.translate_string(
+                        _("Вы уверены, что хотите стереть Дело #{0}? Весь прогресс будет уничтожен!")
+                    ).format(p_id),
+
+                    Function(
+                        TimeEngine.delete_profile,
+                        p_id
                     )
-
-            else:
-                text _("Дело свободно для нового расследования"):
-                    size 18
-                    color "#555555"
-                    xalign 0.5
-                    text_align 0.5
-
-                null height 20
-
-                # 3. Начать новое дело
-                button:
-                    xfill True
-                    ysize 50
-                    background "#333333"
-                    hover_background "#c29b38"
-                    action [
-                        Function(TimeEngine.set_profile, p_id),
-                        Start()
-                    ]
-
-                    text _("НАЧАТЬ РАССЛЕДОВАНИЕ"):
-                        align (0.5, 0.5)
-                        color "#ffffff"
-                        hover_color "#000000"
-                        size 18
+                )

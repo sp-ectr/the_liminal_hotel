@@ -1,104 +1,73 @@
-﻿# TODO: Translation updated at 2026-09-12 14:06
+# TODO: Translation updated at 2026-09-20
 
-translate English strings:
+translate english strings:
 
-    # game/screens/game_menu.rpy:10
+    # game/screens/game_menu.rpy
     old "Дела"
-    new ""
+    new "Cases"
 
-    # game/screens/game_menu.rpy:12
     old "История"
-    new ""
+    new "History"
 
-    # game/screens/game_menu.rpy:14
-    old "Настройки"
-    new ""
+    # «Настройки» переводится в screens/main_menu.rpy
+    # (строковые переводы глобальны, дублировать нельзя)
 
-    # game/screens/game_menu.rpy:17
     old "Главное меню"
-    new ""
+    new "Main menu"
 
-    # game/screens/game_menu.rpy:19
     old "Об игре"
-    new ""
+    new "About"
 
-    # game/screens/game_menu.rpy:22
     old "Выход"
-    new ""
+    new "Quit"
 
-    # game/screens/game_menu.rpy:62
-    old "Вернуться"
-    new ""
+    old "Назад"
+    new "Back"
 
-    # game/screens/game_menu.rpy:128
     old "Режим экрана"
-    new ""
+    new "Display"
 
-    # game/screens/game_menu.rpy:129
     old "Оконный"
-    new ""
+    new "Window"
 
-    # game/screens/game_menu.rpy:130
     old "Полный"
-    new ""
+    new "Fullscreen"
 
-    # game/screens/game_menu.rpy:134
     old "Пропуск"
-    new ""
+    new "Skip"
 
-    # game/screens/game_menu.rpy:135
     old "Всего текста"
-    new ""
+    new "Unseen text"
 
-    # game/screens/game_menu.rpy:136
     old "После выборов"
-    new ""
+    new "After choices"
 
-    # game/screens/game_menu.rpy:137
     old "Переходов"
-    new ""
+    new "Transitions"
 
-    # game/screens/game_menu.rpy:145
     old "Скорость текста"
-    new ""
+    new "Text speed"
 
-    # game/screens/game_menu.rpy:147
-    old "Скорость авточтения"
-    new ""
-
-    # game/screens/game_menu.rpy:152
     old "Громкость музыки"
-    new ""
+    new "Music volume"
 
-    # game/screens/game_menu.rpy:157
     old "Громкость звуков"
-    new ""
+    new "Sound volume"
 
-    # game/screens/game_menu.rpy:161
-    old "Тест"
-    new ""
-
-    # game/screens/game_menu.rpy:165
     old "Без звука"
-    new ""
+    new "Mute all"
 
-    # game/screens/game_menu.rpy:245
     old "История диалогов пуста."
-    new ""
+    new "Dialogue history empty."
 
-    # game/screens/game_menu.rpy:290
     old "О ПРОЕКТЕ"
-    new ""
+    new "ABOUT THE PROJECT"
 
-    # game/screens/game_menu.rpy:297
     old "НАЗАД В МЕНЮ (Esc)"
-    new ""
+    new "BACK TO MENU (Esc)"
 
-    # game/screens/game_menu.rpy:326
     old "Да"
-    new ""
+    new "Yes"
 
-    # game/screens/game_menu.rpy:327
     old "Нет"
-    new ""
-
+    new "No"

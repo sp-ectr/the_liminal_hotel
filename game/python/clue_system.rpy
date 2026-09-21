@@ -57,37 +57,44 @@ init -1 python:
             return edges
 
 
-# ЗАГЛУШКА
-
-    # 1. Латунный ключ (связан с квитанцией)
+# УЛИКИ = КАРТОЧКИ ПЕРСОНАЖЕЙ (полароидные снимки на доске расследования)
+# Открываются в сюжете через TimeEngine.unlock_clue("<clue_id>")
     ClueDatabase.register(Clue(
-        clue_id="master_key",
-        title=_("Латунный ключ от 203"),
-        description=_("Тяжёлый ключ с потёртой биркой '203'. Был спрятан в нижнем ящике стойки регистрации."),
-        thumb="gui/window_icon.png",
-        pos=(500, 350),
-        category="item",
-        connections=["torn_receipt"]
-    ))
-
-    # 2. Обрывок квитанции
-    ClueDatabase.register(Clue(
-        clue_id="torn_receipt",
-        title=_("Обгоревшая квитанция"),
-        description=_("Квитанция об оплате номера 203 на имя неизвестного постояльца. Дата полустёрта."),
-        thumb="gui/window_icon.png",
-        pos=(950, 420),
-        category="document",
+        clue_id="desi",
+        title=_("Дезмонд Ларкспур"),
+        description=_("Постоялец отеля. Держится неестественно спокойно и, кажется, знает о петлях больше, чем говорит."),
+        thumb="gui/investigation_board/desi.png",
+        pos=(450, 480),
+        category="person",
         connections=[]
     ))
 
-    # 3. Фотография постояльца
     ClueDatabase.register(Clue(
-        clue_id="guest_photo",
-        title=_("Фотография постояльца"),
-        description=_("Снимок сделан на полароид в холле отеля три дня назад. Лицо человека выглядит встревоженным."),
-        thumb="gui/window_icon.png",
-        pos=(1400, 300),
+        clue_id="eli",
+        title=_("Илай Рурк"),
+        description=_("Мастер на все руки отеля. Его инструменты пропали из подсобки в ночь инцидента."),
+        thumb="gui/investigation_board/eli.png",
+        pos=(780, 460),
+        category="person",
+        connections=[]
+    ))
+
+    ClueDatabase.register(Clue(
+        clue_id="dr_dimaano",
+        title=_("Доктор Эверетт Димаано"),
+        description=_("Хирург. Привёл меня в сознание после аварии и наблюдал, пока я не встала на ноги. Держит дистанцию: «мы друг другу случайные прохожие, а не попутчики». Позже его можно найти в баре."),
+        thumb="gui/investigation_board/dr_dimaano.png",
+        pos=(1140, 470),
+        category="person",
+        connections=[]
+    ))
+
+    ClueDatabase.register(Clue(
+        clue_id="mr_renard",
+        title=_("Мистер Ренар"),
+        description=_("Владелец отеля. Улыбается чаще, чем говорит правду, и ни разу не назвал одно и то же время инцидента."),
+        thumb="gui/investigation_board/mr_renard.png",
+        pos=(1480, 490),
         category="person",
         connections=[]
     ))

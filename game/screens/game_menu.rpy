@@ -1,7 +1,8 @@
-#ЭКРАНЫ НАВИГАЦИИ НАСТРОЕК И ПАУЗЫ
+# -------------------------------------------------------------------
+# 1. ЛЕВОЕ МЕНЮ НАВИГАЦИИ (Внутри паузы)
+# -------------------------------------------------------------------
 screen navigation():
     vbox:
-        style_prefix "navigation"
         xpos gui.navigation_xpos
         yalign 0.5
         spacing gui.navigation_spacing
@@ -21,351 +22,463 @@ screen navigation():
         if renpy.variant("pc"):
             textbutton _("Выход") action Quit(confirm=not main_menu)
 
-style navigation_button is gui_button
-style navigation_button_text is gui_button_text
-style navigation_button:
-    size_group "navigation"
-    properties gui.button_properties("navigation_button")
-style navigation_button_text:
-    properties gui.text_properties("navigation_button")
+
+# -------------------------------------------------------------------
+# ТРАНСФОРМАЦИИ НАКЛОНА СТРАНИЦ БЛОКНОТА (ПОД МАКЕТ ФИГМЫ)
+# -------------------------------------------------------------------
+transform dossier_left_tilt:
+    rotate_pad False
+    rotate -1.5
+
+transform dossier_right_tilt:
+    rotate_pad False
+    rotate 1.0
 
 
-screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
-    style_prefix "game_menu"
-    if main_menu:
-        add gui.main_menu_background
-    else:
-        add gui.game_menu_background
-
-    frame:
-        style "game_menu_outer_frame"
-        hbox:
-            frame:
-                style "game_menu_navigation_frame"
-            frame:
-                style "game_menu_content_frame"
-                if scroll == "viewport":
-                    viewport:
-                        yinitial yinitial
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
-                        side_yfill True
-                        vbox:
-                            spacing spacing
-                            transclude
-                else:
-                    transclude
-
-    use navigation
-    textbutton _("Вернуться"):
-        style "return_button"
-        action Return()
-
-    label title
-    if main_menu:
-        key "game_menu" action ShowMenu("main_menu")
-
-style game_menu_outer_frame is empty
-style game_menu_navigation_frame is empty
-style game_menu_content_frame is empty
-style game_menu_viewport is gui_viewport
-style game_menu_side is gui_side
-style game_menu_scrollbar is gui_vscrollbar
-style game_menu_label is gui_label
-style game_menu_label_text is gui_label_text
-style return_button is navigation_button
-style return_button_text is navigation_button_text
-
-style game_menu_outer_frame:
-    bottom_padding 45
-    top_padding 180
-    background "gui/overlay/game_menu.png"
-
-style game_menu_navigation_frame:
-    xsize 420
-    yfill True
-
-style game_menu_content_frame:
-    left_margin 60
-    right_margin 30
-    top_margin 15
-
-style game_menu_viewport:
-    xsize 1380
-
-style game_menu_vscrollbar:
-    unscrollable gui.unscrollable
-
-style game_menu_side:
-    spacing 15
-
-style game_menu_label:
-    xpos 75
-    ysize 180
-
-style game_menu_label_text:
-    size 75
-    color gui.accent_color
-    yalign 0.5
-
-style return_button:
-    xpos gui.navigation_xpos
-    yalign 1.0
-    yoffset -45
-
-
+# -------------------------------------------------------------------
+# 2. ЭКРАН НАСТРОЕК (ДОСЬЕ: две страницы поверх options_dossier.png)
+# -------------------------------------------------------------------
 screen preferences():
     tag menu
-    use game_menu(_("Настройки"), scroll="viewport"):
-        vbox:
-            hbox:
-                box_wrap True
-                if renpy.variant("pc") or renpy.variant("web"):
-                    vbox:
-                        style_prefix "radio"
-                        label _("Режим экрана")
-                        textbutton _("Оконный") action Preference("display", "window")
-                        textbutton _("Полный") action Preference("display", "fullscreen")
 
-                vbox:
-                    style_prefix "check"
-                    label _("Пропуск")
-                    textbutton _("Всего текста") action Preference("skip", "toggle")
-                    textbutton _("После выборов") action Preference("after choices", "toggle")
-                    textbutton _("Переходов") action InvertSelected(Preference("transitions", "toggle"))
+    # Фон — раскрытая папка с блокнотом и зип-пакетом
+    add "gui/options/options_dossier.png"
 
-            null height (4 * gui.pref_spacing)
+    # Заголовок OPTIONS над пакетом слева
+    text "OPTIONS":
+        font "fonts/Jost/Jost-Regular.ttf"
+        size 42
+        color "#ffffff"
+        xpos 160
+        ypos 120
 
-            hbox:
-                style_prefix "slider"
-                box_wrap True
-                vbox:
-                    label _("Скорость текста")
-                    bar value Preference("text speed")
-                    label _("Скорость авточтения")
-                    bar value Preference("auto-forward time")
-
-                vbox:
-                    if config.has_music:
-                        label _("Громкость музыки")
-                        hbox:
-                            bar value Preference("music volume")
-
-                    if config.has_sound:
-                        label _("Громкость звуков")
-                        hbox:
-                            bar value Preference("sound volume")
-                            if config.sample_sound:
-                                textbutton _("Тест") action Play("sound", config.sample_sound)
-
-                    if config.has_music or config.has_sound:
-                        null height gui.pref_spacing
-                        textbutton _("Без звука"):
-                            action Preference("all mute", "toggle")
-                            style "mute_all_button"
-
-style pref_label is gui_label
-style pref_label_text is gui_label_text
-style pref_vbox is vbox
-style radio_label is pref_label
-style radio_label_text is pref_label_text
-style radio_button is gui_button
-style radio_button_text is gui_button_text
-style radio_vbox is pref_vbox
-style check_label is pref_label
-style check_label_text is pref_label_text
-style check_button is gui_button
-style check_button_text is gui_button_text
-style check_vbox is pref_vbox
-style slider_label is pref_label
-style slider_label_text is pref_label_text
-style slider_slider is gui_slider
-style slider_button is gui_button
-style slider_button_text is gui_button_text
-style slider_pref_vbox is pref_vbox
-style mute_all_button is check_button
-style mute_all_button_text is check_button_text
-
-style pref_label:
-    top_margin gui.pref_spacing
-    bottom_margin 3
-style pref_label_text:
-    yalign 1.0
-style pref_vbox:
-    xsize 338
-style radio_vbox:
-    spacing gui.pref_button_spacing
-style radio_button:
-    properties gui.button_properties("radio_button")
-    foreground "gui/button/radio_[prefix_]foreground.png"
-style radio_button_text:
-    properties gui.text_properties("radio_button")
-style check_vbox:
-    spacing gui.pref_button_spacing
-style check_button:
-    properties gui.button_properties("check_button")
-    foreground "gui/button/check_[prefix_]foreground.png"
-style check_button_text:
-    properties gui.text_properties("check_button")
-style slider_slider:
-    xsize 525
-style slider_button:
-    properties gui.button_properties("slider_button")
-    yalign 0.5
-    left_margin 15
-style slider_button_text:
-    properties gui.text_properties("slider_button")
-style slider_vbox:
-    xsize 675
-
-
-screen history():
-    tag menu
-    predict False
-    use game_menu(_("История"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=1.0, spacing=gui.history_spacing):
-        style_prefix "history"
-        for h in _history_list:
-            window:
-                has fixed:
-                    yfit True
-                if h.who:
-                    label h.who:
-                        style "history_name"
-                        substitute False
-                        if "color" in h.who_args:
-                            text_color h.who_args["color"]
-
-                $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
-                text what:
-                    substitute False
-
-        if not _history_list:
-            label _("История диалогов пуста.")
-
-define gui.history_allow_tags = { "alt", "noalt", "rt", "rb", "art" }
-style history_window is empty
-style history_name is gui_label
-style history_name_text is gui_label_text
-style history_text is gui_text
-style history_label is gui_label
-style history_label_text is gui_label_text
-style history_window:
-    xfill True
-    ysize gui.history_height
-style history_name:
-    xpos gui.history_name_xpos
-    xanchor gui.history_name_xalign
-    ypos gui.history_name_ypos
-    xsize gui.history_name_width
-style history_name_text:
-    min_width gui.history_name_width
-    textalign gui.history_name_xalign
-style history_text:
-    xpos gui.history_text_xpos
-    ypos gui.history_text_ypos
-    xanchor gui.history_text_xalign
-    xsize gui.history_text_width
-    min_width gui.history_text_width
-    textalign gui.history_text_xalign
-    layout ("subtitle" if gui.history_text_xalign else "tex")
-style history_label:
-    xfill True
-style history_label_text:
-    xalign 0.5
-
-
-screen about():
-    tag menu
-
-    add "images/bg/menu.png"
-    add "#000000C8"
-
+    # НАВИГАЦИЯ ВНУТРИ ЗИП-ПАКЕТА СЛЕВА
     vbox:
-        xalign 0.5
-        yalign 0.10
+        xpos 160
+        ypos 410
+        spacing 16
+
+        textbutton _("Дела"):
+            style "dossier_nav_btn"
+            action ShowMenu("case_select")
+
+        textbutton _("Настройки"):
+            style "dossier_nav_btn"
+            text_color "#c20000"
+            text_hover_color "#ff3333"
+            action ShowMenu("preferences")
+
+        textbutton _("Об игре"):
+            style "dossier_nav_btn"
+            action ShowMenu("about")
+
+        textbutton _("Выход"):
+            style "dossier_nav_btn"
+            action Quit(confirm=True)
+
+    # ---------------------------------------------------------------
+    # ЛЕВАЯ СТРАНИЦА БЛОКНОТА (Экран, Скорость, Язык)
+    # Наклон: -1.5 градуса
+    # ---------------------------------------------------------------
+    vbox:
+        at dossier_left_tilt
+        xpos 700
+        ypos 185
+        xsize 420
         spacing 8
 
-        text _("О ПРОЕКТЕ"):
-            font "fonts/AlumniSansPinstripe.ttf"
-            size 65
-            color "#c29b38"
-            xalign 0.5
-            outlines [(2, "#000000", 0, 0)]
+        # Display
+        text _("Display"):
+            font "fonts/Jost/Jost-Regular.ttf"
+            size 30
+            color "#1a1a1a"
+            bold True
 
-    textbutton _("НАЗАД В МЕНЮ (Esc)"):
-        xalign 0.5
-        yalign 0.93
-        text_font "fonts/AlumniSansPinstripe.ttf"
-        text_size 42
-        text_color "#aaaaaa"
+        vbox:
+            xpos 35
+            spacing 4
+
+            # Window
+            button:
+                action Preference("display", "window")
+                has hbox:
+                    spacing 10
+                    yalign 0.5
+                if not _preferences.fullscreen:
+                    add "gui/options/crossout.png":
+                        yalign 0.5
+                        zoom 0.7
+                else:
+                    null width 24 height 24
+                text _("window"):
+                    font "fonts/Jost/Jost-Regular.ttf"
+                    size 22
+                    color ("#c20000" if not _preferences.fullscreen else "#666666")
+                    hover_color "#1a1a1a"
+
+            # Fullscreen
+            button:
+                action Preference("display", "fullscreen")
+                has hbox:
+                    spacing 10
+                    yalign 0.5
+                if _preferences.fullscreen:
+                    add "gui/options/crossout.png":
+                        yalign 0.5
+                        zoom 0.7
+                else:
+                    null width 24 height 24
+                text _("fullscreen"):
+                    font "fonts/Jost/Jost-Regular.ttf"
+                    size 22
+                    color ("#c20000" if _preferences.fullscreen else "#666666")
+                    hover_color "#1a1a1a"
+
+        null height 15
+
+        # Text Speed
+        text _("Text speed"):
+            font "fonts/Jost/Jost-Regular.ttf"
+            size 26
+            color "#1a1a1a"
+            bold True
+
+        bar value Preference("text speed"):
+            style "pref_slider"
+            xsize 380
+
+        null height 15
+
+        # Auto-forward Speed
+        text _("Auto-forward speed"):
+            font "fonts/Jost/Jost-Regular.ttf"
+            size 26
+            color "#1a1a1a"
+            bold True
+
+        bar value Preference("auto-forward time"):
+            style "pref_slider"
+            xsize 380
+
+        # Отступ: опускаем Language к оленю
+        null height 80
+
+        # Language
+        vbox:
+            xpos 215
+            spacing 4
+
+            text _("Language"):
+                font "fonts/Jost/Jost-Regular.ttf"
+                size 24
+                color "#1a1a1a"
+                bold True
+
+            textbutton "english":
+                style "dossier_lang_btn"
+                text_color ("#c20000" if _preferences.language == "english" else "#666666")
+                action Function(pick_language, "english")
+
+            textbutton "russian":
+                style "dossier_lang_btn"
+                text_color ("#c20000" if _preferences.language is None else "#666666")
+                action Function(pick_language, "russian")
+
+    # ---------------------------------------------------------------
+    # ПРАВАЯ СТРАНИЦА БЛОКНОТА (Пропуск, Громкость, Mute)
+    # Наклон: +1.0 градус
+    # ---------------------------------------------------------------
+    vbox:
+        at dossier_right_tilt
+        xpos 1290
+        ypos 190
+        xsize 420
+        spacing 10
+
+        # Skip
+        text _("Skip"):
+            font "fonts/Jost/Jost-Regular.ttf"
+            size 30
+            color "#1a1a1a"
+            bold True
+
+        vbox:
+            xpos 45
+            spacing 4
+
+            textbutton _("unseen text"):
+                style "dossier_skip_btn"
+                text_color ("#c20000" if _preferences.skip_unseen else "#666666")
+                action Preference("skip", "toggle")
+
+            textbutton _("after choices"):
+                style "dossier_skip_btn"
+                text_color ("#c20000" if _preferences.skip_after_choices else "#666666")
+                action Preference("after choices", "toggle")
+
+            textbutton _("transitions"):
+                style "dossier_skip_btn"
+                text_color ("#c20000" if _preferences.transitions == 2 else "#666666")
+                action Preference("transitions", "toggle")
+
+        null height 20
+
+        # Music volume
+        if config.has_music:
+            text _("Music volume"):
+                font "fonts/Jost/Jost-Regular.ttf"
+                size 26
+                color "#1a1a1a"
+                bold True
+
+            bar value Preference("music volume"):
+                style "pref_slider"
+                xsize 380
+
+        null height 15
+
+        # Sound volume
+        if config.has_sound:
+            text _("Sound volume"):
+                font "fonts/Jost/Jost-Regular.ttf"
+                size 26
+                color "#1a1a1a"
+                bold True
+
+            bar value Preference("sound volume"):
+                style "pref_slider"
+                xsize 380
+
+        # Отступ: опускаем Mute к ёлкам
+        null height 75
+
+        # Mute all — БЕЗ ВЫЛЕТОВ через selected_color стиля
+        button:
+            action Preference("all mute", "toggle")
+            style "dossier_mute_btn"
+            xoffset -20
+            has hbox:
+                spacing 10
+                yalign 0.5
+            text _("Mute all") style "dossier_mute_btn_text"
+            add "gui/options/mute.png":
+                yalign 0.5
+                zoom 0.85
+
+    # Кнопка Back в левом нижнем углу
+    textbutton _("back"):
+        xpos 115
+        ypos 930
+        text_font "fonts/Jost/Jost-Regular.ttf"
+        text_size 36
+        text_color "#777777"
         text_hover_color "#ffffff"
         action Return()
 
     key "game_menu" action Return()
 
 
+# Стили кнопок навигации внутри пакета
+style dossier_nav_btn is default:
+    xalign 0.0
+
+style dossier_nav_btn_text:
+    font "fonts/Jost/Jost-Regular.ttf"
+    size 30
+    color "#d6d6d6"
+    hover_color "#c20000"
+
+# Стили текстовых кнопок на страницах
+style dossier_skip_btn is default
+style dossier_skip_btn_text:
+    font "fonts/Jost/Jost-Regular.ttf"
+    size 22
+    hover_color "#1a1a1a"
+
+style dossier_lang_btn is default
+style dossier_lang_btn_text:
+    font "fonts/Jost/Jost-Regular.ttf"
+    size 22
+    hover_color "#1a1a1a"
+
+style dossier_mute_btn is default
+style dossier_mute_btn_text:
+    font "fonts/Jost/Jost-Regular.ttf"
+    size 24
+    color "#666666"
+    hover_color "#1a1a1a"
+    selected_color "#c20000"
+
+# Ползунок-стрелка с красным крестиком (ysize 34 — чтобы остриё и крылья
+# стрелки не срезались рендером бара)
+style pref_slider is slider:
+    ysize 34
+    base_bar "gui/options/hover_arrow.png"
+    thumb "gui/options/crossout.png"
+    thumb_align 0.5
+    thumb_offset 12
+
+
+# -------------------------------------------------------------------
+# 3. ЭКРАН ИСТОРИИ ДИАЛОГОВ (КИНОПЛЁНКА)
+# -------------------------------------------------------------------
+init python:
+    # Сцена за историей размывается (слой master) и затемняется —
+    # плёнка history_film.png имеет собственную прозрачность
+    def blur_scene():
+        renpy.show_layer_at([Transform(blur=8)], layer="master")
+
+    def unblur_scene():
+        renpy.show_layer_at([], layer="master")
+
+
+screen history():
+    tag menu
+    predict False
+
+    on "show" action Function(blur_scene)
+    on "hide" action Function(unblur_scene)
+    on "replaced" action Function(unblur_scene)
+
+    add "#00000066"
+    add "gui/history_film.png"
+    use navigation
+
+    text _("История"):
+        xpos 480
+        ypos 60
+        size 45
+        color "#cc0000"
+        outlines [(2, "#000000", 0, 0)]
+
+    viewport:
+        xpos 480
+        ypos 150
+        xsize 1380
+        ysize 840
+        scrollbars "vertical"
+        mousewheel True
+        draggable True
+        yinitial 0.0
+
+        vbox:
+            spacing 20
+            for h in _history_list:
+                window:
+                    background None
+                    has vbox
+                    if h.who:
+                        label h.who:
+                            text_color "#c29b38"
+                    $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
+                    text what:
+                        color "#e0dacf"
+                        size 22
+
+            if not _history_list:
+                label _("История диалогов пуста.")
+
+    textbutton _("Назад"):
+        xpos gui.navigation_xpos
+        yalign 0.95
+        action Return()
+
+    key "game_menu" action Return()
+
+
+# -------------------------------------------------------------------
+# 4. ЭКРАН "О ПРОЕКТЕ" (ABOUT)
+# -------------------------------------------------------------------
+screen about():
+    tag menu
+    add "bg menu"
+    add "#000000C8"
+
+    vbox:
+        xalign 0.5
+        yalign 0.3
+        spacing 20
+
+        text _("О ПРОЕКТЕ"):
+            size 60
+            color "#c29b38"
+            xalign 0.5
+
+        text "[config.name!t] — [config.version!t]":
+            size 24
+            color "#aaaaaa"
+            xalign 0.5
+
+    textbutton _("НАЗАД В МЕНЮ (Esc)"):
+        xalign 0.5
+        yalign 0.9
+        action Return()
+
+    key "game_menu" action Return()
+
+
+# -------------------------------------------------------------------
+# 5. ЭКРАН ПОДТВЕРЖДЕНИЯ (CONFIRM - ОБРЫВОК ИЗ ФИГМЫ)
+# -------------------------------------------------------------------
 screen confirm(message, yes_action, no_action):
     modal True
     zorder 200
-    style_prefix "confirm"
-    add "gui/overlay/confirm.png"
+
+    add "#00000088"
 
     frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 1573
+        ysize 463
+        background Image("gui/confirm_box.png", xalign=0.5, yalign=0.5)
+        padding (80, 60, 80, 40)
+
         vbox:
-            xalign .5
-            yalign .5
-            spacing 45
-            label _(message):
-                style "confirm_prompt"
+            xalign 0.5
+            yalign 0.5
+            spacing 20
+
+            # Текст вопроса (тёмный, читается на белой бумаге)
+            text _(message):
+                color "#1a1a1a"
+                size 24
                 xalign 0.5
+                text_align 0.5
+
+            # Кнопки: Да — красная, Нет — черная
             hbox:
                 xalign 0.5
-                spacing 150
-                textbutton _("Да") action yes_action
-                textbutton _("Нет") action no_action
+                spacing 160
 
+                textbutton _("Да"):
+                    text_color "#c20000"
+                    text_hover_color "#ff3333"
+                    text_size 28
+                    action yes_action
+
+                textbutton _("Нет"):
+                    text_color "#1a1a1a"
+                    text_hover_color "#666666"
+                    text_size 28
+                    action no_action
+
+    key "K_ESCAPE" action no_action
     key "game_menu" action no_action
 
-style confirm_frame is gui_frame
-style confirm_prompt is gui_prompt
-style confirm_prompt_text is gui_prompt_text
-style confirm_button is gui_medium_button
-style confirm_button_text is gui_medium_button_text
-style confirm_frame:
-    background Frame([ "gui/confirm_frame.png", "gui/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
-    padding gui.confirm_frame_borders.padding
-    xalign .5
-    yalign .5
-style confirm_prompt_text:
-    textalign 0.5
-    layout "subtitle"
-style confirm_button:
-    properties gui.button_properties("confirm_button")
-style confirm_button_text:
-    properties gui.text_properties("confirm_button")
 
-
+# -------------------------------------------------------------------
+# 6. ЭКРАН УВЕДОМЛЕНИЙ (NOTIFY)
+# -------------------------------------------------------------------
 screen notify(message):
     zorder 100
-    style_prefix "notify"
-    frame at notify_appear:
-        text "[message!tq]"
+    frame:
+        background "#1a1616ee"
+        xalign 0.98
+        ypos 30
+        padding (20, 10)
+        text "[message!tq]":
+            size 20
+            color "#c29b38"
+
     timer 3.25 action Hide('notify')
-
-transform notify_appear:
-    on show:
-        alpha 0
-        linear .25 alpha 1.0
-    on hide:
-        linear .5 alpha 0.0
-
-style notify_frame is empty
-style notify_text is gui_text
-style notify_frame:
-    ypos gui.notify_ypos
-    background Frame("gui/notify.png", gui.notify_frame_borders, tile=gui.frame_tile)
-    padding gui.notify_frame_borders.padding
-style notify_text:
-    properties gui.text_properties("notify")
