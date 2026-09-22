@@ -220,7 +220,7 @@ label dream_stairs_route:
     $ quick_menu = False
     window hide
 
-    show text _("{color=#b51a1a}{size=55}{b}{i}Вы погибли…или же нет?{/i}{/b}{/size}{/color}") at truecenter
+    show text _("{color=#b51a1a}{size=55}{b}{i}Вы погибли…или же нет?{/i}{/b}{/size}{/color}") at death_title
     with Dissolve(0.8)
 
 
@@ -401,7 +401,7 @@ label dream_elevator_route:
     $ quick_menu = False
     window hide
 
-    show text _("{color=#b51a1a}{size=55}{b}{i}Вы погибли…или же нет?{/i}{/b}{/size}{/color}") at truecenter
+    show text _("{color=#b51a1a}{size=55}{b}{i}Вы погибли…или же нет?{/i}{/b}{/size}{/color}") at death_title
     with Dissolve(0.8)
 
     pause 1.2

@@ -34,3 +34,11 @@ translate english strings:
 
     old "НАЧАТЬ РАССЛЕДОВАНИЕ"
     new "START INVESTIGATION"
+# TODO: Translation updated at 2026-09-22 10:06
+
+translate english strings:
+
+    # game/screens/case_select.rpy:142
+    old "[ ДЕЛО ПОВРЕЖДЕНО ]"
+    new ""
+

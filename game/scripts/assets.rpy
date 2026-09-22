@@ -8,7 +8,6 @@ init python:
     renpy.music.register_channel("room_sfx", mixer="sfx", loop=False)
 
 
-
 # РЕГИСТРАЦИЯ АУДИО: ЭМБИЕНТЫ
 define audio.amb_atrium = "audio/amb/amb_atrium.ogg"
 define audio.amb_dead_body = "audio/amb/amb_dead_body.ogg"
@@ -21,7 +20,6 @@ define audio.amb_writing = "audio/amb/amb_writing.ogg"
 define audio.amb_chase = "audio/amb/amb_chase.ogg"
 
 
-
 # РЕГИСТРАЦИЯ АУДИО: МУЗЫКА
 define audio.mus_atrium = "audio/music/mus_atrium.ogg"
 define audio.mus_dead_body = "audio/music/mus_dead_body.ogg"
@@ -29,7 +27,6 @@ define audio.mus_elevator = "audio/music/mus_elevator.ogg"
 define audio.mus_hotel_room = "audio/music/mus_hotel_room.ogg"
 define audio.mus_main_menu = "audio/music/mus_main_menu.ogg"
 define audio.mus_restaurant = "audio/music/mus_restaurant.ogg"
-
 
 
 # РЕГИСТРАЦИЯ АУДИО: ГОТОВЫЕ ЭФФЕКТЫ
@@ -59,10 +56,7 @@ define audio.sfx_steps_2 = "audio/sfx/sfx_steps_2.ogg"
 define audio.sfx_steps_3 = "audio/sfx/sfx_steps_3.ogg"
 
 #Звуки отеля (001 - 009)
-#1 звук удалила
-#2 звук удалила
 define audio.sfx_hotel_room_003 = "audio/sfx/sfx_hotel_room-003.ogg"
-#4 звук удалила
 define audio.sfx_hotel_room_005 = "audio/sfx/sfx_hotel_room-005.ogg"
 define audio.sfx_hotel_room_006 = "audio/sfx/sfx_hotel_room-006.ogg"
 define audio.sfx_hotel_room_008 = "audio/sfx/sfx_hotel_room-008.ogg"
@@ -78,7 +72,6 @@ define hotel_room_creaks = [
 
 #ВРЕМЕННЫЕ ЗАГЛУШКИ ДЛЯ ЕЩЁ НЕ СДАННЫХ ЗВУКОВ
 define audio.sfx_monster_walk = "<silence 0.0>"
-
 
 
 #РЕГИСТРАЦИЯ АУДИО: ЗВУКИ ИНТЕРФЕЙСА (UI)
@@ -98,19 +91,6 @@ image bg room_night_rain = "images/bg/main_room_night_rain.png"
 image bg office_nolight = "images/bg/office_nolight.png"
 image bg office_projector = "images/bg/office_projector.png"
 image bg menu = "gui/main_menu/menu.png"
-
-# Белая вспышка (scene white / show white в скриптах)
-image white = Solid("#ffffff")
-
-
-#РЕГИСТРАЦИЯ UI-СПРАЙТОВ
-image ui choice_idle = "gui/button/choice_idle_background.png"
-image ui choice_hover = "gui/button/choice_hover_background.png"
-image ui choice_rewind_idle = "gui/button/choice_rewind_idle.png"
-image ui choice_rewind_hover = "gui/button/choice_rewind_hover.png"
-
-
-#РЕГИСТРАЦИЯ ФОНОВ: НОВЫЕ ЛОКАЦИИ (PNG)
 image bg atrium = "images/bg/atrium_back.png"
 image bg desi_room = "images/bg/desi_room_back.png"
 image bg elevator = "images/bg/elevator_back.png"
@@ -120,12 +100,18 @@ image bg scary_elevator = "images/bg/scary_elevator_back.png"
 image bg scary_elevator_inside = "images/bg/scary_elevator_inside_back.png"
 image bg window_deer = "images/bg/window_deer_back.png"
 
+# Белая вспышка (scene white / show white в скриптах)
+image white = Solid("#ffffff")
+
+#РЕГИСТРАЦИЯ UI-СПРАЙТОВ
+image ui choice_idle = "gui/button/choice_idle_background.png"
+image ui choice_hover = "gui/button/choice_hover_background.png"
+image ui choice_rewind_idle = "gui/button/choice_rewind_idle.png"
+image ui choice_rewind_hover = "gui/button/choice_rewind_hover.png"
 
 #РЕГИСТРАЦИЯ ВИДЕО-ФОНОВ (Movie, зациклены по умолчанию)
 image bg endless_stairs = Movie(play="images/bg/endless_stairs.webm")
 image bg forest_day = Movie(play="images/bg/forest_day.webm")
-# Группа "forest": при переключении олень/без оленя последний кадр предыдущего
-# ролика держится на экране, пока новый не отдаст первый кадр (без квадратов в стыке)
 image bg forest_deer = Movie(play="images/bg/forest_deer.webm", group="forest")
 image bg forest_no_deer = Movie(play="images/bg/forest_no_deer.webm", group="forest")
 image bg parking = Movie(play="images/bg/parking_back.webm", group="parking")
@@ -179,15 +165,43 @@ image writer smile2 = "images/characters/writer/smile2.png"
 image writer soft_smile = "images/characters/writer/soft_smile.png"
 
 transform writer_normal:
-    zoom 0.47
+    zoom 0.46
     xalign 0.5
     yalign 1.0
 
 transform writer_left:
-    zoom 0.47
+    zoom 0.46
     xalign 0.25
     yalign 1.0
 
+transform observer_normal:
+    zoom 0.54
+    xalign 0.5
+    yalign 1.0
+
+transform observer_right_darkened:
+    zoom 0.54
+    xalign 1.0
+    yalign 1.0
+    matrixcolor TintMatrix("#333333")
+
+transform observer_right_normal:
+    easein 0.8 zoom 0.54 xalign 1.0 yalign 1.0 matrixcolor TintMatrix("#ffffff")
+
+transform doctor_normal:
+    zoom 0.50
+    xalign 0.5
+    yalign 1.0
+
+transform fugitive_normal:
+    zoom 0.38
+    xalign 0.5
+    yalign 1.0
+
+transform npc_right:
+    zoom 0.50
+    xalign 1.0
+    yalign 1.0
 
 #РЕГИСТРАЦИЯ NPC (статичные)
 image bandit = "images/nps/bandit.png"
@@ -209,6 +223,11 @@ transform flashlight_flash:
     linear 0.1 alpha 0.85
     linear 0.4 alpha 0.0
 
+# Заголовок экрана смерти располагается над кнопкой воскрешения.
+transform death_title:
+    xalign 0.5
+    ycenter 365
+
 transform time_rewind_glitch:
     parallel:
         linear 0.04 xoffset -10
@@ -223,3 +242,28 @@ transform time_rewind_glitch:
         matrixcolor InvertMatrix(0.8)
         pause 0.06
         matrixcolor InvertMatrix(0.0)
+
+
+
+#ВРЕМЕННЫЕ ПЛЕЙСХОЛДЕРЫ CG: ТРУП БРОКА
+
+image cg dead_body_half = Composite(
+    (1920, 1080),
+    (0, 0), "#000000CC",
+    (740, 500), Text(
+        "CG: ТРУП В НОМЕРЕ (БЕЗ ЛИЦА)",
+        size=32,
+        color="#ff4444"
+    )
+)
+
+image cg dead_body_full = Composite(
+    (1920, 1080),
+    (0, 0), "#220000DD",
+    (700, 500), Text(
+        "CG: ТРУП (ЛИЦО КРУПНЫМ ПЛАНОМ)",
+        size=36,
+        color="#ff2222",
+        bold=True
+    )
+)

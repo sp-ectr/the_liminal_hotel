@@ -71,3 +71,55 @@ translate english strings:
 
     old "Нет"
     new "No"
+# TODO: Translation updated at 2026-09-22 10:06
+
+translate english strings:
+
+    # game/screens/game_menu.rpy:91
+    old "Display"
+    new ""
+
+    # game/screens/game_menu.rpy:113
+    old "window"
+    new ""
+
+    # game/screens/game_menu.rpy:131
+    old "fullscreen"
+    new ""
+
+    # game/screens/game_menu.rpy:140
+    old "Text speed"
+    new ""
+
+    # game/screens/game_menu.rpy:153
+    old "Auto-forward speed"
+    new ""
+
+    # game/screens/game_menu.rpy:171
+    old "Language"
+    new ""
+
+    # game/screens/game_menu.rpy:199
+    old "Skip"
+    new ""
+
+    # game/screens/game_menu.rpy:209
+    old "unseen text"
+    new ""
+
+    # game/screens/game_menu.rpy:228
+    old "Music volume"
+    new ""
+
+    # game/screens/game_menu.rpy:242
+    old "Sound volume"
+    new ""
+
+    # game/screens/game_menu.rpy:263
+    old "Mute all"
+    new ""
+
+    # game/screens/game_menu.rpy:269
+    old "back"
+    new ""
+

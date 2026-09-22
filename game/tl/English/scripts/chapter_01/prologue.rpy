@@ -218,3 +218,17 @@ translate english prologue_4ae31e4b:
     # n "Противотуманка и дальники выхватывают {b}тень{/b}."
     n "A {b}{i}shadow{/i}{/b} gets caught in the high beams."
 
+# TODO: Translation updated at 2026-09-22 10:06
+
+# game/scripts/chapter_01/prologue.rpy:100
+translate english prologue_f8aa4f50:
+
+    # n "Давлю на все кнопки сразу в надежде, что неисправность пройдёт."
+    n ""
+
+# game/scripts/chapter_01/prologue.rpy:102
+translate english prologue_0d831b65:
+
+    # radio "Вы– {i}*помехи*{/i} –детектив– {i}*помехи*{/i} –замечаете– {i}*помехи*{/i} –ничего–"
+    radio ""
+

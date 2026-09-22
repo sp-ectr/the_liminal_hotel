@@ -234,13 +234,31 @@ init -2 python:
                 )
                 return
 
-            #инкрементируем счетчик петель
+             # Инкрементируем общий счётчик петель
             meta = cls.get_meta(p)
             meta["loop_count"] = meta.get("loop_count", 1) + 1
+
+            # Отдельно считаем перемотки конкретного якоря
+            anchor_rewinds = meta.setdefault("anchor_rewinds", {})
+            anchor_rewinds[anchor_id] = anchor_rewinds.get(anchor_id, 0) + 1
 
             renpy.save_persistent()
             renpy.load(slot_name)
 
+        @classmethod
+        def get_anchor_rewind_count(cls, anchor_id):
+            """Сколько раз игрок уже перематывался к конкретному якорю"""
+            meta = cls.get_meta()
+            return meta.get("anchor_rewinds", {}).get(anchor_id, 0)
+
+        @classmethod
+        def reset_anchor_rewind_count(cls, anchor_id):
+            """Сбрасывает счётчик конкретного временного якоря"""
+            meta = cls.get_meta()
+            anchor_rewinds = meta.setdefault("anchor_rewinds", {})
+            anchor_rewinds[anchor_id] = 0
+            renpy.save_persistent()
+            
         # 3. МЕТА-УЛИКИ
         @classmethod
         def unlock_clue(cls, clue_id):

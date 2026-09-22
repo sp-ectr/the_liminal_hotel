@@ -962,3 +962,17 @@ translate english strings:
     old "{color=#b51a1a}{size=55}{b}{i}Вы погибли…или же нет?{/i}{/b}{/size}{/color}"
     new "{color=#b51a1a}{size=55}{b}{i}You have died… Or have you?{/i}{/b}{/size}{/color}"
 
+# TODO: Translation updated at 2026-09-22 10:06
+
+# game/scripts/chapter_01/hotel_dream.rpy:84
+translate english hotel_dream_0e5d3728:
+
+    # n "Замечаю указатель, ведущий к лифту. Лестницу. И глухие стены, тянущиеся на многие футы."
+    n ""
+
+# game/scripts/chapter_01/hotel_dream.rpy:448
+translate english dream_elevator_route_fb1b8404:
+
+    # n "Позолоченная табличка {b}{i}404{/i}{/b} блекло отражает свет."
+    n ""
+

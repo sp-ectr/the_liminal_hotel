@@ -106,7 +106,6 @@ screen say(who, what):
 init python:
     config.character_id_prefixes.append('namebox')
 
-
 # Окно блокнота
 style window:
     xalign 0.5
@@ -171,6 +170,7 @@ screen choice(items):
                     action i.action
                     idle_background "ui choice_rewind_idle"
                     hover_background "ui choice_rewind_hover"
+                    yoffset 190
 
                     fixed:
                         xysize (1155, 297)
@@ -178,7 +178,8 @@ screen choice(items):
                         text rewind_caption:
                             style "choice_rewind_button_text"
                             xpos 0
-                            ypos 133
+                            xanchor 0.0
+                            ypos 141
                             xsize 980
                             yanchor 0.5
                             text_align 0.5

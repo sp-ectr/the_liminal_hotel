@@ -1,26 +1,3 @@
-#ВРЕМЕННЫЕ ПЛЕЙСХОЛДЕРЫ CG
-image cg dead_body_half = Composite(
-    (1920, 1080),
-    (0, 0), "#000000CC",
-    (740, 500), Text(
-        "CG: ТРУП В НОМЕРЕ (БЕЗ ЛИЦА)",
-        size=32,
-        color="#ff4444"
-    )
-)
-
-image cg dead_body_full = Composite(
-    (1920, 1080),
-    (0, 0), "#220000DD",
-    (700, 500), Text(
-        "CG: ТРУП (ЛИЦО КРУПНЫМ ПЛАНОМ)",
-        size=36,
-        color="#ff2222",
-        bold=True
-    )
-)
-
-
 #СЦЕНА 1: ЭКСПОЗИЦИЯ
 label exposition:
 

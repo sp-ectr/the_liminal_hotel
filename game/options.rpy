@@ -1,7 +1,7 @@
 ﻿# База
 define config.name = _("The Liminal Hotel")
 define gui.show_name = True
-define config.version = "0.1.3-demo-base-prototype"
+define config.version = "0.1.4-demo-base-prototype"
 define config.save_directory = "TheLiminalHotel-Demo-2026"
 define build.name = "The_Liminal_Hotel"
 
